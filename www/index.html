@@ -1,0 +1,2563 @@
+﻿<!DOCTYPE html>
+<html style="background-image: url('public/images/EAslicing/bgrepete.png'); background-repeat:repeat;height:100%;">
+ <head>
+ <meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+ <meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />   
+ <title>
+ Europ Assist
+ </title>     
+  <link rel="stylesheet" href="js/jquerymobile120min.css" />
+ <link href="newcss.css" rel="stylesheet" type="text/css" />
+ <script src="js/jquery164min.js" type="text/javascript"></script>     
+ <script src="js/jquerymobile110min.js" type="text/javascript"></script>       
+ <script type="text/javascript">
+$(function () {       
+if (screen.height == 800 || screen.height == '800') {
+document.getElementById('splshimg').src = "res/screen/blackberry/225225.jpg";
+$('.footerDiv').height(480);
+setTimeout(function () {
+checkremember();
+}, 5000);             
+} else {
+document.getElementById('splshimg').src = "res/screen/225225.jpg";
+$('.footerDiv').height(35);
+setTimeout(function () {
+checkremember();
+}, 5000);
+}  
+$('div').live('pagehide', function (event, ui) {
+var $this = $(this);
+if ($this.attr('ID') !== undefined && $this.attr('data-cache') !== undefined && $this.attr('data-cache') == "never") {
+var page = $this.attr('ID');
+$(document.getElementById(page)).remove();
+}
+});
+});
+
+/***********18/10/2013*************/
+var cog = new Image();
+function init() {
+cog.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABK1JREFUeNqMVt1ZGzkUvVfS4IW1l8GO82w6IBXE7mCpAFMB+Pt4Z6iApALcAe4AU0HoAJfg7BPYHinnXmmciX+y0YdmJHnQ0bk/R5cvh5cUyFPwRD4EChgEvGWMB36R3+JaiTkmD5gOs8yNb25uLlerFf1pM2yIGA82TEY7xow1oj4GBU6S6yywPNG4JwDH+XGv0Whs7ndN8n97mmPsLCSYgy7ImPQE/pFDyAF+7L0fgTNFUDBcLal90taD1doQ/T6NT9DnW8zkT+jJuQVYukG3hifCVk/L3JOxMBa8VVlSp9MhHKLaB+zpNo1fdgEpmByuMqUAV5viOQLwXNax9KBAFNEEpN1pUwnQmvl6aTza6zNjrCKaymeyOdYAMgfg18iG4T/qw+AC94zvpzDjcwqOXo3VGH26H0xMZ7jPxgT0R2zUi4BYt6bAfEbJvJFZKA4ODgZ5nhcJLE9mk35X21vWC/TXKmiwr2xszoQd/PQv3t/QCzY2twpqBpb5FKOp+hCgzWaTWq0W1Xx0ij5An9WC5VtiLMwvNBrVaSGMvQk5jHQVPN7sb0HzAtE+QJrNgrcUNEARieWCut0ugR0tl8sKcJ5Ahc3jRviPK8ZGTaaBwGKyT+gTiwM4a3Jrba6MbeVXo5F4kp9shn29ndUYC9vLirGDXzRhrYhD8DME5Hkg22df5rDYS/RXmVIsaP/Q/SXs600YnifTjbeSWliEdTYb3QyTqYfdDKTL4B1KS6tVqf6SgGq3P9BvZGpvNIrPCgVKZlGlCDQDxJiCjVppCab05DJHzb+b1Gm36X80cVjLuzozexs0f6IgRkA5XRhzIixRL1+IzhwdHVHrn1Y9oXe1i10aKT6bGGhg1CKK+cT0zCGCs0oXTIogybJMw/779//o48duMvnO9rzLn+Kz8wgS5Shqo4njpCoOQA5Ajb8adHh4SMvVghaLhYb/HsBip88krNVISSEigOlhjmi0LziNhr6wOsgO9C1339vbGznnNAU2AM9Svk235cqKieKGkldAf7DGvTrjnjJnzyQoMu0ZTuZgUqvmlYR+f39XIE4uqCX1E/rDZpCYmKwOOmivAfYK9KF1AM7EdG4uAMLAOjmQideQXOJQkyUisqYiFRhtSFbxCxj8do0T30dmTvLhC+an0MZZVBHX09tBTG4qFigZEJEChjTIEwtRik81Qa7uOQU0IrYAe7FRjqYw6SlYjgAyN1GmHsFIGPfVnxzFuFITKEkfYK+oWZ5qKlIkcZ7UE92oXBmeIgIxtAO5UtSHqo9uiLW+sme5ejSIRASeAFR4LYy8MMzL1aq3EYWzJF28BgMEzGYpBkrMKelgl+P6uTcVY8NjLYyYPwMTCcufSaouH6al9xNJcjC82vDb9uVZKbrWIumNO+waVsu1TCC+Wxcg6xaSpsZSYM2wLO9/U8qZWH+wztQnsfAxV/E3MIKZVf1FsmJVV8mamhEmxZ0X7sSsABsGv1tZJGejmptU7FBUDYzPAXQBwFEEl+9+stFEroJEci2ELwIMmZuWoSTE9DYYcWVCjlJrZWMpeBhlAEqBiulPE84S3ixU5gSTwGGOdyEVNJXxA8nPevshwABHktBS1YoQ+QAAAABJRU5ErkJggg=='; // Set source path
+setInterval(draw, 10);
+}
+var rotation = 0;
+function draw() { var ctx = document.getElementById('myCanvas').getContext('2d'); ctx.globalCompositeOperation = 'destination-over'; ctx.save(); ctx.clearRect(0, 0, 27, 27); ctx.translate(13.5, 13.5); rotation += 1; ctx.rotate(rotation * Math.PI / 64); ctx.translate(-13.5, -13.5); ctx.drawImage(cog, 0, 0); ctx.restore() }
+$("#divhm,#divmm,#divrd,#divle,#divtr").hide();
+$("#hme,#medical,#roadas,#legalas,#travelas").hide();
+/********* HEADING CLICK **********/
+function belowheadingcollapse() { if (window.localStorage.getItem("gethome") == 1) { $("#hme,#assisth").show(); document.getElementById("hme").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlHome") + ")"; $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divhm").className = "panelcollapsed"; $("#divhm").show() } if (window.localStorage.getItem("getmedical") == 2) { $("#medical,#medtb").show(); document.getElementById("medical").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlMedical") + ")"; $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divmm").className = "panelcollapsed"; $("#divmm").show() } if (window.localStorage.getItem("getroad") == 3) { $("#roadas,#rdtb").show(); document.getElementById("roadas").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlRoad") + ")"; $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divrd").className = "panelcollapsed"; $("#divrd").show() } if (window.localStorage.getItem("getlegal") == 4) { $("#legalas,#letb").show(); document.getElementById("legalas").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlLegal") + ")"; $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divle").className = "panelcollapsed"; $("#divle").show() } if (window.localStorage.getItem("gettravel") == 5) { $("#travelas,#trtb").show(); document.getElementById("travelas").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlTravel") + ")"; $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divtr").className = "panelcollapsed"; $("#divtr").show() } }
+$(function () { $("#assisth").click(function () { if (window.localStorage.getItem("gethome") == 1) { $("#assisth").hide(); $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divhm").className = "panelcollapsed"; $("#divhm").show(); $("#medical,#roadas,#legalas,#travelas").hide(); $("#hme").show(); document.getElementById("hme").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlHome") + ")"; if (document.getElementById("divmm").className == "panel") { $("#medtb").show(); document.getElementById("divmm").className = "panelcollapsed" } if (document.getElementById("divrd").className == "panel") { $("#rdtb").show(); document.getElementById("divrd").className = "panelcollapsed" } if (document.getElementById("divtr").className == "panel") { $("#trtb").show(); document.getElementById("divtr").className = "panelcollapsed" } if (document.getElementById("divle").className == "panel") { $("#letb").show(); document.getElementById("divle").className = "panelcollapsed" } } }) }); $(function () { $("#medtb").click(function () { if (window.localStorage.getItem("getmedical") == 2) { $("#medtb").hide(); $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divmm").className = "panelcollapsed"; $("#divmm").show(); $("#hme,#roadas,#legalas,#travelas").hide(); $("#medical").show(); document.getElementById("medical").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlMedical") + ")"; if (document.getElementById("divhm").className == "panel") { $("#assisth").show(); document.getElementById("divhm").className = "panelcollapsed" } if (document.getElementById("divrd").className == "panel") { $("#rdtb").show(); document.getElementById("divrd").className = "panelcollapsed" } if (document.getElementById("divtr").className == "panel") { $("#trtb").show(); document.getElementById("divtr").className = "panelcollapsed" } if (document.getElementById("divle").className == "panel") { $("#letb").show(); document.getElementById("divle").className = "panelcollapsed" } } }) }); $(function () { $("#rdtb").click(function () { if (window.localStorage.getItem("getroad") == 3) { $("#rdtb").hide(); $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divrd").className = "panelcollapsed"; $("#divrd").show(); $("#hme,#medical,#legalas,#travelas").hide(); $("#roadas").show(); document.getElementById("roadas").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlRoad") + ")"; if (document.getElementById("divmm").className == "panel") { $("#medtb").show(); document.getElementById("divmm").className = "panelcollapsed" } if (document.getElementById("divhm").className == "panel") { $("#assisth").show(); document.getElementById("divhm").className = "panelcollapsed" } if (document.getElementById("divtr").className == "panel") { $("#trtb").show(); document.getElementById("divtr").className = "panelcollapsed" } if (document.getElementById("divle").className == "panel") { $("#letb").show(); document.getElementById("divle").className = "panelcollapsed" } } }) }); $(function () { $("#letb").click(function () { if (window.localStorage.getItem("getlegal") == 4) { $("#letb").hide(); $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divle").className = "panelcollapsed"; $("#divle").show(); $("#hme,#medical,#roadas,#travelas").hide(); $("#legalas").show(); document.getElementById("legalas").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlLegal") + ")"; if (document.getElementById("divmm").className == "panel") { $("#medtb").show(); document.getElementById("divmm").className = "panelcollapsed" } if (document.getElementById("divhm").className == "panel") { $("#assisth").show(); document.getElementById("divhm").className = "panelcollapsed" } if (document.getElementById("divtr").className == "panel") { $("#trtb").show(); document.getElementById("divtr").className = "panelcollapsed" } if (document.getElementById("divrd").className == "panel") { $("#rdtb").show(); document.getElementById("divrd").className = "panelcollapsed" } } }) }); $(function () { $("#trtb").click(function () { if (window.localStorage.getItem("gettravel") == 5) { $("#trtb").hide(); $("#homeseperator").removeClass("middlecontent3"); document.getElementById("divtr").className = "panelcollapsed"; $("#divtr").show(); $("#hme,#medical,#roadas,#legalas,#travelas").hide(); $("#travelas").show(); document.getElementById("travelas").style.backgroundImage = "url(" + window.localStorage.getItem("imgUrlTravel") + ")"; if (document.getElementById("divmm").className == "panel") { $("#medtb").show(); document.getElementById("divmm").className = "panelcollapsed" } if (document.getElementById("divhm").className == "panel") { $("#assisth").show(); document.getElementById("divhm").className = "panelcollapsed" } if (document.getElementById("divle").className == "panel") { $("#letb").show(); document.getElementById("divle").className = "panelcollapsed" } if (document.getElementById("divrd").className == "panel") { $("#rdtb").show(); document.getElementById("divrd").className = "panelcollapsed" } } }) })
+//uncommented Asha dec 3rd
+function callforassistance(type, value) { if (value == 1) { CreatePleaseCallMeRequestNew(type) } }
+</script>   
+     
+ </head>
+ <body class="bluebg" style="overflow-x:hidden" >   
+ <div id="loaddingimg" class="loadingmaindiv">
+ <div class="loadingimgdiv">
+ <canvas width="27" height="27" id="myCanvas" ></canvas></div>
+ </div> 
+<div data-role="page" id="splscreen" style="width:100%; height:1000px;"> 
+    <img src="res/screen/blackberry/225225.jpg" alt="" id="splshimg"/>
+</div>
+ <div data-role="page" id="indexPage" style="overflow-x:hidden;">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table></div>
+  <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr>
+ <td class="logincontent loginpadd" onclick="gotoRegFirstPage();">
+ <div style="height:26.5px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="login" style="float:left;">Register</div>
+ <div class="regcol2" style="float:left;height: 46px;"><img src="public/images/EAslicing/register.png" class="loginimg" /></div>
+ <div >&nbsp;</div>
+ <div style="height:26.5px"></div>
+ </td>
+ </tr>
+ <tr>
+ <td class="logincontent loginpadd" onclick="login();">
+ <div style="height:26.5px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="login" style="float:left">Login</div>
+ <div class="regcol2" style="float:left;height: 46px;"><img src="public/images/EAslicing/lock.png" class="loginimg" /></div>
+ <div >&nbsp;</div>
+ <div style="height:26.5px"></div>
+ </td>
+ </tr>
+ <tr>
+ <td class="bgfooter2 foo"></td>
+ </tr>
+ </table>
+ </div>
+ <div data-role="page" id="log"  style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+ <div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table></div>
+ <table class="maintable" cellspacing="0" cellpadding="0"> 
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Login</div>
+ <div class="regcol2" style="float:left;"><img src="public/images/EAslicing/lock.png" class="loginimg1" alt="" /></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+   <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">USER NAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="txtbxreg" id="txtLoginUserName" maxlength="50"/></td>
+ <td class="tdwidth"></td>
+ </tr>
+     <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">PASSWORD</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="password" class="txtbxreg" id="txtLoginPassword" maxlength="50"/></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1">
+ <div style="width:50%;float:left" onclick="gotoForgotPassword();">
+ <a href="#" class="hyperlink">Forgot Password?</a>
+ </div>
+ <div style="width:40%;float:left;text-align:right">
+ <input data-role="none" type="image" alt="" src="public/images/checkbox.png" id="chkremember" class="logcheck" style="margin-bottom: -2px;" onclick="logcheck();"/>
+ <a href="#" class="hyperlink" style="text-decoration:none;">Remember me</a>
+ </div>
+ </td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/submitbutton.png" class="regsubbtn" onclick="EALoginValidation()"/></td>
+ </tr>
+ <tr class="footerDiv">
+ <td>
+ <br />
+ <br />
+ <br />
+ </td>
+ </tr> 
+<tr >
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="RegFstPage" style="overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table></div>
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Register</div>
+ <div class="regcol2" style="float:right;"><img src="public/images/EAslicing/register.png" class="loginimg1" alt="" /></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>   <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">USER NAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="txtbxreg" id="txtusernameregfirst" maxlength="10" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">PASSWORD</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="password" class="txtbxreg" id="txtpwregfirst" maxlength="10"/></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">CONFIRM PASSWORD</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="password" class="txtbxreg" id="txtconfirmpwregfirst" maxlength="10"/></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center;" colspan="3"><img alt=" " src="public/images/EAslicing/next.png" class="regsubbtn" onclick="gotoRegister();" /></td>
+ </tr>
+ <tr class="footerDiv">
+ <td >
+ <br /><br /><br /><br /><br />
+ </td>
+ </tr>
+<tr >
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="indexservice" style="overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="profileclass" onclick="gotoService()" > <img src="public/images/EAslicing/serviceswhite.png" alt="" class="headerimgstyle" /> <div class="walser">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table>
+</div>
+<table style="width:100%;overflow-x:hidden;" cellspacing="0" cellpadding="0" class="maintable">
+<!-- img -->
+<tr class="hidediv">
+<td class="home" id="hme">
+    <img src="" alt="" id="hmimg" style="width:100%;height:100%;" />
+</td>
+</tr>
+<!-- img content  Home-->
+<tr class="trheight5" >
+<td class="middlecontent4" id="homeseperator">
+<div id="divhm" class="panelcollapsed">
+<h2 id="assisth" style="margin: 0!important; padding: 0;width:100%;background-color:red">
+<table style="width:100%;height:100%" cellspacing="0" cellpadding="0">
+<tr id="tddiv">
+<td class="regcol1"></td>
+<td class="regtopHeader">Home Assistance
+</td>
+<td class="regcol2" style="text-align:right">
+<img alt=" " src="public/images/EAslicing/check/homeassistancelogo.png" class="hmeassist">
+</td>
+<td class="regcol1"></td>
+</tr>
+</table>
+</h2>
+<!-- collapsable div -->
+<div class="panelcontent" id="divhome">
+<div style="width:100%" class="plbg btpd" >                                    
+<div class="btpd" style="width:5%;float:left"></div>
+<div style="width:90%;text-align:center;float:left">
+<table style="width:100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="width:49px" class="sliderLeft"></td>
+<td class="slideclick">
+<select name="sliderhome" id="sliderhome" data-role="slider" style="height: 0px;" onchange="javascript:callforassistance('home', this.value);">
+<option value="0"></option>
+<option value="1"></option>
+</select>
+<div id="sliderhomecontent" class="slideclass">
+SLIDE TO CALL BACK
+</div>
+</td>
+<td style="width:49px" class="sliderRight"></td>
+</tr>
+</table>
+</div>
+<div style="width:5%;float:left"></div>
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="text-align:center;float:left;width: 100%;">
+<img alt=" " src="public/images/clickformoreinfo.png" class="imght" onclick="GetMoreInfo('Home')" />
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+<!--  <table width="100%" cellspacing="0" cellpadding="0" id="hmetb" onclick="hmeassist()">-->
+<div style="width:100%"  id="hmetb" onclick="belowheadingcollapse()">
+<div class="bgfooter2">
+<div class="regcol1" style="float:left">&nbsp;</div>
+<div class="regtopHeader" style="float:left">Home Assistance
+</div>
+<div class="regcol2" style="text-align:right;float:left">
+<img alt=" " src="public/images/EAslicing/check/homeassistancelogo.png" class="hmeassist" />
+</div>
+<div class="regcol1"></div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- img content end -->
+<tr class="hidediv">
+<td class="medical" id="medical" >
+    <img src="" alt="" id="mdimg" style="width:100%;height:100%;" />
+</td>
+</tr>
+<!-- img content  Medical-->
+<tr class="trheight5">
+<td class="middlecontent4">
+<div id="divmm" class="panelcollapsed">
+<h2 id="medtb" style="margin: 0!important; padding: 0; background-color:red">
+<table style="width:100%;" cellspacing="0" cellpadding="0">
+<tr>
+<td class="regcol1"></td>
+<td class="regtopHeader">Medical Assistance
+</td>
+<td class="regcol2" style="text-align:right">
+<img alt=" " src="public/images/EAslicing/check/medicalassistancelogo.png" class="hmeassist">
+</td>
+<td class="regcol1"></td>
+</tr>
+</table>
+</h2>
+<div class="panelcontent" id="divmedical">
+<div class="plbg btpd" style="width:100%">                                   
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="width:90%;text-align:center;float:left" >
+<table style="width:100%;" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="width:49px;" class="sliderLeft"></td>
+<td class="slideclick">
+<select name="slidermedical" id="slidermedical" data-role="slider" style="height: 0px;" onchange="javascript:callforassistance('medical', this.value);">
+<option value="0">
+</option>
+<option value="1"></option>
+</select>
+<div id="slidermedicalcontent" class="slideclass">
+SLIDE TO CALL BACK
+</div>
+</td>
+<td style="width:49px;" class="sliderRight"></td>
+</tr>
+</table>
+</div>
+<div style="width:6%;float:left"></div>
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="text-align:center;float:left;width:100%">
+<img alt=" " src="public/images/clickformoreinfo.png" class="imght" onclick="GetMoreInfo('Medical')" />
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+<!--  <table width="100%" cellspacing="0" cellpadding="0" onclick="mediassist()">-->
+<div style="width:100%"  onclick="belowheadingcollapse()">
+<div class="bgfooter2">
+<div class="regcol1" style="float:left">&nbsp;</div>
+<div class="regtopHeader" style="float:left">Medical Assistance
+</div>
+<div class="regcol2" style="text-align:right;float:left">
+<img alt=" " src="public/images/EAslicing/check/medicalassistancelogo.png" class="hmeassist" />
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="hidediv">
+<td class="roadassistance" id="roadas">  <img src="" alt="" id="rdimg" style="width:100%;height:100%;" /></td>
+</tr>
+<!-- img content  Road-->
+<tr class="trheight5">
+<td class="middlecontent4">
+<div id="divrd" class="panelcollapsed">
+<h2 id="rdtb" style="margin: 0!important; padding: 0; background-color:red;">
+<table style="width:100%" cellspacing="0" cellpadding="0">
+<tr>
+<td class="regcol1"></td>
+<td class="regtopHeader">Road Assistance
+</td>
+<td class="regcol2" style="text-align:right">
+<img alt=" " src="public/images/EAslicing/check/roadassistancelogo.png" class="hmeassist">
+</td>
+<td class="regcol1"></td>
+</tr>
+</table>
+</h2>
+<div class="panelcontent" id="divroad">
+<div class="plbg btpd" style="width:100%;">
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div  style="text-align:center;width:90%;float:left">
+<table style="width:100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="width:49px" class="sliderLeft"></td>
+<td class="slideclick">
+<select name="sliderroad" id="sliderroad" data-role="slider" style="height: 0px;" onchange="javascript:callforassistance('road', this.value);">
+<option value="0">
+</option>
+<option value="1"></option>
+</select>
+<div id="sliderroadcontent" class="slideclass">
+SLIDE TO CALL BACK
+</div>
+</td>
+<td style="width:49px" class="sliderRight"></td>
+</tr>
+</table>
+</div>
+<div style="width:6%;float:left"></div>
+</div>
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="text-align:center;float:left;width:100%">
+<img alt=" " src="public/images/clickformoreinfo.png" class="imght" onclick="GetMoreInfo('Road')">
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+<!-- <table width="100%" cellspacing="0" cellpadding="0" onclick="roadassist()">-->
+<div style="width:100%;" " onclick="belowheadingcollapse()">
+<div class="bgfooter2">
+<div class="regcol1" style="float:left">&nbsp;</div>
+<div class="regtopHeader" style="float:left">Road Assistance
+</div>
+<div class="regcol2" style="text-align:right;float:left;">
+<img alt=" " src="public/images/EAslicing/check/roadassistancelogo.png" class="hmeassist" />
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="hidediv">
+<td class="legal" id="legalas">  <img src="" alt="" id="lgimg" style="width:100%;height:100%;" /></td>
+</tr>
+<!-- img content  legal-->
+<tr class="trheight5">
+<td class="middlecontent4">
+<div id="divle" class="panelcollapsed">
+<h2 id="letb" style="margin: 0!important; padding: 0; background-color:red">
+<table style="width:100%" cellspacing="0" cellpadding="0">
+<tr>
+<td class="regcol1"></td>
+<td class="regtopHeader">Legal Assistance
+</td>
+<td class="regcol2" style="text-align:right">
+<img alt=" " src="public/images/EAslicing/check/leagelassistancelogo.png" class="hmeassist">
+</td>
+<td class="regcol1"></td>
+</tr>
+</table>
+</h2>
+<div class="panelcontent" id="divlegal">
+<div class="plbg btpd" style="width:100%;">
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="width:90%;text-align:center;float:left">
+<table style="width:100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="width:49px" class="sliderLeft"></td>
+<td class="slideclick">
+<select name="sliderlegal" id="sliderlegal" data-role="slider" style="height: 0px;" onchange="javascript:callforassistance('legal', this.value);">
+<option value="0">
+</option>
+<option value="1"></option>
+</select>
+<div id="sliderlegalcontent" class="slideclass">
+SLIDE TO CALL BACK
+</div>
+</td>
+<td style="width:49px" class="sliderRight"></td>
+</tr>
+</table>
+</div>
+<div style="width:6%;float:left"></div>
+</div>
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="text-align:center;float:left;width:100%">
+<img alt=" " src="public/images/clickformoreinfo.png" class="imght" onclick="GetMoreInfo('Legal')">
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+<!-- <table width="100%" cellspacing="0" cellpadding="0" onclick="legalassist()">-->
+<div style="width:100%"  onclick="belowheadingcollapse()">
+<div class="bgfooter2">
+<div class="regcol1" style="float:left">&nbsp;</div>
+<div class="regtopHeader" style="float:left">Legal Assistance
+</div>
+<div class="regcol2" style="text-align:right;float:left">
+<img alt=" " src="public/images/EAslicing/check/leagelassistancelogo.png" class="hmeassist" />
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="hidediv">
+<td class="travel" id="travelas"><img src="" alt="" id="tlimg" style="width:100%;height:100%;" /></td>
+</tr>
+<!-- img content  travel-->
+<tr class="trheight5">
+<td>
+<div id="divtr" class="panelcollapsed">
+<h2 id="trtb" style="margin: 0!important; padding: 0; background-color:red">
+<table style="width:100%" cellspacing="0" cellpadding="0">
+<tr>
+<td class="regcol1"></td>
+<td class="regtopHeader">Travel Assistance
+</td>
+<td class="regcol2" style="text-align:right">
+<img alt=" " src="public/images/EAslicing/check/travelassistancelogo.png" class="hmeassist">
+</td>
+<td class="regcol1"></td>
+</tr>
+</table>
+</h2>
+<div class="panelcontent" id="divtravel">
+<div class="plbg btpd" cellspacing="0" cellpadding="0">
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="width:90%;text-align:center;float:left" >
+<table style="width:100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="width:49px" class="sliderLeft"></td>
+<td class="slideclick">
+<select name="slidertravel" id="slidertravel" data-role="slider" style="height: 0px;" onchange="javascript:callforassistance('travel', this.value);">
+<option value="0">
+</option>
+<option value="1"></option>
+</select>
+<div id="slidertravelcontent" class="slideclass">
+SLIDE TO CALL BACK
+</div>
+</td>
+<td style="width:49px" class="sliderRight"></td>
+</tr>
+</table>
+</div>
+<div style="width:6%;float:left"></div>
+</div>
+<div>
+<div class="btpd" style="width:6%;float:left"></div>
+<div style="text-align:center;float:left;width:100%">
+<img alt=" " src="public/images/clickformoreinfo.png" class="imght" onclick="GetMoreInfo('Travel')" />
+</div>
+<div class="regcol1" style="float:left"></div>
+</div>
+</div>
+<!-- <table width="100%" cellspacing="0" cellpadding="0" onclick="travelassist()">-->
+<div style="width:100%" cellspacing="0" cellpadding="0" onclick="belowheadingcollapse()">
+<div class="bgfooter2">
+<div class="regcol1" style="float:left;">&nbsp;</div>
+<div class="regtopHeader" style="float:left;">Travel Assistance
+</div>
+<div class="regcol2" style="text-align:right;float:left;">
+<img alt=" " src="public/images/EAslicing/check/travelassistancelogo.png" class="hmeassist" />
+</div>
+<div class="regcol1" style="float:left;"></div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td style="vertical-align:middle;height:100%">
+<div class="NoproDiv"  id="NOproductDiv">There are no mobile products setup for this User. Please contact EASA ICT</div>               
+</td>
+</tr>
+<tr>
+<td>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />  <br />
+<br />
+<br />
+<br />
+<br />  <br />
+<br />
+<br />
+<br />
+<br />
+</td>
+</tr>
+</table>
+ </div> 
+ <div data-role="page" id="indexprofile" style="overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="profileclass" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilewhite.png" alt="" class="headerimgstyle" /> <div class="walser">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table>
+</div>
+<table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Your Profile</div>
+ <div class="regcol2" style="float:right;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+     <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">USER NAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox3" id="txtusername" maxlength="50" disabled="disabled" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">FIRST NAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox3" id="txtname" maxlength="50" disabled="disabled" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">SURNAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="textbox3" id="txtsname" maxlength="50" disabled="disabled"/></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">EMAIL</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="textbox3" id="txtemail" maxlength="50" disabled="disabled" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">CELL PHONE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="number" class="textbox3" id="txtcellno" disabled="disabled" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ID NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="textbox3" id="txtid" maxlength="50" disabled="disabled" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+     <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">NEW PASSWORD</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="password" class="textbox3" id="txtnewpin" maxlength="50" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">CONFIRM NEW PASSWORD</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="password" class="textbox3" id="txtconpin" maxlength="50" /></td>
+ </tr>
+ <tr>
+ <td><br /><br /></td>
+ </tr>
+ <tr style="height:10%"> <td class="tdwidth" ></td>
+ <td style="width:70%;text-align:left;" ><img alt=" " src="public/images/EAslicing/changepass.png" id="pin" onclick="validation()" /></td> <td class="tdwidth"></td>
+ </tr>
+    <tr>
+ <td><br /><br /></td>
+ </tr>
+ <tr class="footerDiv">
+ <td><input type="hidden" id="oldpin" />
+ <br />
+ </td>
+ </tr>
+ <tr >
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div> 
+ <div data-role="page" id="indexwallet" style="overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table>
+</div>
+<table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" onclick="gotoBalance();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Balance</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoPayFriend();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Pay A Friend</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoBuyPrepaid();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Buy Prepaid</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoPayStore();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Pay-In-Store</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoTopUp();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Top-Up</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoSlocator();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Store Locator</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoTHistory();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Transaction History</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="trheight2" onclick="gotoMyCoupons();">
+ <td class="middlecontent3" colspan="3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">My Coupons</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="footerDiv">
+ <td >
+ <br /><br /><br /><br />
+ </td>
+ </tr>
+<tr >
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="indexhelp" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable"> 
+ <div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="profileclass" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpwhite.png" alt="" class="headerimgstyle" /> <div class="walser">FAQs</div> </div> </td> </tr> </table>
+ </div>
+ <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">FAQs</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div> 
+ <table class="maintable" cellspacing="0" cellpadding="0" id="FAQtbl">
+  <!--<tr>  <td class="qtnnew" onclick="helpqtnans();"><div class="textstyle3new" > Do I need a bank account to use EASA wallet?</div> <div class="regcol1new"> <img src="public/images/EAslicing/rightsymbolarrow.png" alt="" /> </div> </tr>   -->
+</table>
+ </div> 
+ <div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div id="helpbackbtn">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div> 
+ <div data-role="page" id="clickformoreinfo" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+ <div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="profileclass" onclick="gotoService()" > <img src="public/images/EAslicing/serviceswhite.png" alt="" class="headerimgstyle" /> <div class="walser">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table>
+</div><div id="homeheader" class="homeheadercls">
+ HOME ASSISTANCE
+ </div>
+ <div id="divhomeassist" class="homecontentcls"> 
+ </div>
+ <div id="divmediassist" class="homecontentcls"> 
+ </div>
+ <div id="divroadassist" class="homecontentcls"> 
+ </div>
+ <div id="legaldiv" class="homecontentcls"> 
+ </div>
+ <div id="traveldiv" class="homecontentcls"> 
+ </div >
+ <div class="footerDiv"> <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div >
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="reg" style="overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table></div>
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Register</div>
+ <div class="regcol2" style="float:right;"><img alt="" src="public/images/EAslicing/register.png" class="loginimg1"  /></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>   <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">FIRST NAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="txtbxreg" id="txtRegName" maxlength="50" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">SURNAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="txtbxreg" id="txtRegSurName" maxlength="50" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">EMAIL</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="txtbxreg" id="txtRegEmail" maxlength="250" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">CELL PHONE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input class="txtbxreg" id="txtRegCell" name="cell" type="text" value="+27" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ID NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input class="txtbxreg" id="txtRegIDNo" type="number" /></td>
+ <td class="tdwidth"></td>
+ </tr><tr>
+ <td><br /></td>
+ </tr>
+ <tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">POLICY NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input class="txtbxreg" id="txtRegPolicyNumber" type="number" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1">
+ <div style="float:left;text-align:right">
+ <input data-role="none" type="image" alt="" src="public/images/checkbox.png" id="chkAcceptTerms" class="logcheck" onclick="oncheck()"/>
+ <span class="accept">Accept our</span> <span class="hyperlink" onclick="gototerms();">Terms & Conditions</span>
+ </div>
+ </td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center;" colspan="3"><img alt=" " src="public/images/EAslicing/submitbutton.png" id="RegSubmit" onclick="UserRegistration()" class="regsubbtn" /></td>
+ </tr>
+ <tr class="footerDiv">
+ <td><input type="hidden" id="Hidden1" />
+ <br /><br /><br />
+ </td>
+ </tr>
+<tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="indexbenefit" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+ <div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="profileclass" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="walser">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table></div>
+<div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Your Benefits</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div> 
+ <table class="maintable" style="overflow-x:hidden;" cellspacing="0" cellpadding="0" id="tbldisplaycategories">
+ </table>
+ </div> 
+ <div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />     
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div id="benefitbackbtn">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="goeat" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="profileclass" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="walser">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table></div>
+  <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;" id="tblmerchantnameheading">Go Eat</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div> 
+ </div>
+ <div> 
+ <table class="piatto" cellspacing="0" cellpadding="0" style="width:100%;height:100%;padding:0 20px 0 20px;overflow-x:hidden;"  id="tbldisplaymerchantdeals">
+     <tr><td>dfsdfgfd</td></tr>
+ </table>
+ </div>
+<div>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div> 
+ <div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+ <div id="dealsbackbtn">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="merchantnames" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="profileclass" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="walser">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> </table></div>
+  <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;" id="tblheading">Your Benefits</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div> 
+ </div> 
+ <div style="padding:10px 0 10px 0;">
+ <div style="width:60%; height:10%; padding-left:5%; float:left;">
+ <input type="text" id="txtmerchantsearch" placeholder="Search">
+ </div>
+ <div style="float:left; padding-left:5%; width:25%;max-height:100%;vertical-align: middle;">
+ <img alt=" " src="public/images/EAslicing/searchbtn.png" id="btnmerchantsearch" width="100%" height="100%" onclick="GetMerchantsBySearch()" class="">
+ </div>
+ </div>
+     <div><br /></div>
+ <div> 
+ <table class="maintable" cellspacing="0" cellpadding="0" style="margin-top:50px;overflow-x:hidden;" id="tbldisplaycategoriesbycid">
+ <tr class="tdbgc">
+ <td class="cellclass"> 
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="logoimgclass" /></td>
+ <td class="textstyle1 gorow">Next page </td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr>
+ </table>
+ </div>  <div>
+ <br /><br /><br /><br /><br />
+ </div>
+ <div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div id="merchantbackbtn">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="qtnanswers" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+  <div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="headerbckrndimgg" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="profileclass" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpwhite.png" alt="" class="headerimgstyle" /> <div class="walser">FAQs</div> </div> </td> </tr> </table></div>
+ <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;" >FAQs</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div> 
+ </div>
+ <div class="freshbrnd">
+<table class="piatto" cellspacing="0" cellpadding="10" style="width:100%;height:100%;overflow-x:hidden;" id="tblquestionans">
+ </table>
+ </div>
+ <div> 
+ <br /><br /><br /><br /><br />
+ </div>
+ <div class="footerDiv"> <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div id="qtnansbackbtn">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="terms" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table></div>
+ <div class="trheight2">
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Terms and conditions</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div class="prdt">Europ Assistance South Africa, through its authorised service providers (referred to as “we” or “us”) will provide members (“you”) with functionality that allows you to push an emergency button on hand held devices to request services (“service”). You must be a valid member at the time of the emergency request for the services to be provided. Once the service is activated through the device, a communication request will be sent to us. Successful communication can only be achieved if you have a fully active data connection with your phone and your mobile network operator has a fully operation network coverage in the area. It is your responsibility to ensure that a working data channel exists, that the data transfer is acceptable and data transfer is possible. The service has been tested on the handset; we take no responsibility for the application not working on your handset for any reason whatsoever. Should the device fail to communicate with Europ Assistance, we will attempt to inform you that a communication error has occurred, in the event that no communication is receive from Europ Assistance, please contact us on 0861 …. for emergency assistance. </div>
+ <div class="footerDiv"> <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div >
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div> 
+<div data-role="page" id="ForgotPassword" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;" class="scrollable">
+<div class="header1" style="height:80px;width:100%;overflow-x:hidden;"><table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table></div>
+  <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Forgot Password</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+      <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">CELL NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input class="txtbxreg" id="txtfpcellno" name="Fcell" type="text" value="+27"  /></td>
+ <td class="tdwidth"></td>
+ </tr>
+<tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/submitbutton.png" class="regsubbtn" onclick="ForgotPasswordValidation();" /></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr> 
+ <tr>
+ <td class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+<tr >
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+     <!-- new header -->
+<div data-role="page" id="yourbalance" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header12" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Your Balance</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div> 
+ </div> 
+ <div class="balancedata" style="margin:2% 5% 0% 5%"> 
+ Your Current Balance
+ </div> 
+<div class="hyperlink" id="tdCurrentBalance" style="margin:2% 5% 0% 5%"> 
+ </div> 
+    <div>
+ <br /><br /><br /><br /><br /><br />
+ </div>
+ <div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+     <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="payafriend" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+ <div class="header18" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Pay A Friend</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">FRIEND CELL NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="number" class="textbox1" id="txtfrnd" max="10" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">AMOUNT</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="number" class="textbox1" id="txtfriendAmount" max="15" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+<tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/confirm22.png" class="regsubbtn" onclick="payfrnd()" /></td>
+ </tr>
+ <tr>
+ <td  class="footerDiv">
+ <br /><br /> <br /><br />
+ </td>
+ </tr>
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="buyprepaid" style="overflow-x:hidden;">
+  <div class="header5" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">  
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Buy Prepaid</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="tdbgc" onclick="gotoAirtimePage()">
+ <td class="textstyle1 gorow"> AIRTIME</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoElecPage()">
+ <td class="textstyle1 gorow">ELECTRICITY</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoBillsPage()">
+ <td class="textstyle1 gorow">BILLS</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="">
+ <td class="textstyle1 gorow"> OTHERS</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+<tr class="footerDiv">
+ <td>
+ <br /> <br /> <br /> <br /> <br />
+ </td>
+ </tr>
+    <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="payuse" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;"> 
+ <div class="header19" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Pay-In-Store</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/useEASEwallet.png" class="regsubbtn" onclick=" gotoPaystore()" /></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr>
+ <td class="usebi" colspan="3">
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="loyalty" style="float:left"> Or select one of your Loyalty cards</div>
+ </tr>
+ <tr class="tdbgc" onclick="gotoPaystore()">
+ <td class="textstyle1 gorow"> AIRTIME</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoPaystore()">
+ <td class="textstyle1 gorow"> ELECTRICITY</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoPaystore()">
+ <td class="textstyle1 gorow"> BILLS</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoPaystore()">
+ <td class="textstyle1 gorow"> OTHERS</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br />
+ </td>
+ </tr>     
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div> 
+ <div data-role="page" id="topup" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+<div class="header23" style="height:80px;width:100%;overflow-x:hidden"></div>  
+<div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;"> Top-Up</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div>  
+ <table class="maintable" cellspacing="0" cellpadding="0" id="Table1">
+ <tr class="tdbgc" onclick="gotoAddremove()">
+ <td class="textstyle1 gorow"> CREDIT CARD</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr>
+ <tr class="tdbgc" onclick="gotoEft()">
+ <td class="textstyle1 gorow"> EFT</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr>
+ <tr class="tdbgc" onclick="gotoTopupin()">
+ <td class="textstyle1 gorow"> EFT</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr>
+ </table>
+ </div> 
+ <div>
+ <br /><br /><br /><br /><br />
+ </div>
+<div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+     <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="storelocator" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+ <div class="header20" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Store Locator</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr>
+ <td colspan="3"><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/useGPS.png" class="regsubbtn" onclick="GetMerchantsByGPS();" /></td>
+ </tr>
+ <tr>
+ <td colspan="3"><br /></td>
+ </tr>
+ <tr>
+ <td class="usebi" colspan="3">
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="loyalty" style="float:left"> Or select a province</div>
+ </td>
+ </tr>
+ <tr><td><br /></td></tr>
+ <tr> 
+     <td class="dropdownwidth"></td>
+ <td style="width:70%;">
+ <div class="styled-select">
+ <select data-role="none" id='selectprovinceid' onchange="GetCity();">
+ <option value="0">
+ PROVINCE
+ </option>
+ </select>
+ </div>
+ </td>
+ <td class="dropdownwidth"></td></tr>
+     <tr><td><br /></td></tr>
+ <tr> <td class="dropdownwidth"></td>
+ <td style="width:70%;">
+ <div class="styled-select">
+ <select data-role="none" id='selectcityid' onchange="GetSuburb();">
+ <option value="0">
+ CITY
+ </option>
+ </select>
+ </div>
+ </td>
+ <td class="dropdownwidth"></td></tr>
+     <tr><td><br /></td></tr>
+ <tr> <td class="dropdownwidth"></td>
+ <td style="width:70%;">
+ <div class="styled-select">
+ <select data-role="none" id='selectsuburbid' >
+ <option value="0">
+ SUBURB
+ </option>
+ </select>
+ </div>
+ </td>
+ <td class="dropdownwidth"></td></tr><tr><td><br /></td></tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/Btn/subbmitbutton.png" onclick="submitData()" /></td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br />
+ </td>
+ </tr>
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+<div data-role="page" id="mycoupons" style="background-image: url('public/images/EAslicing/bgrepete.png'); background-repeat: repeat;overflow-x:hidden;">
+  <div class="header13" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">My Coupons</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotopick()">
+ <td class="textstyle1 gorow"> PICK N PAY</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotopick()">
+ <td class="textstyle1 gorow"> CHECKERS</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotopick()">
+ <td class="textstyle1 gorow"> MTN</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotopick()">
+ <td class="textstyle1 gorow"> SHOPRITE</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotopick()">
+ <td class="textstyle1 gorow"> KWAI</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotopick()">
+ <td class="textstyle1 gorow">FORTNUM & MASON</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br />
+ </td>
+ </tr>
+  <tr>
+<td colspan="2">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>     
+ <div data-role="page" id="transactionhistory" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header10" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Your Transaction History</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div>
+ <table style="height:100%;width:80%; margin-left:10%;margin-right:10%;overflow-x:hidden" class="bgfooter2" cellspacing="0" cellpadding="0">
+ <tr style="height:6%;">
+ <td colspan="5"><br /></td>
+ </tr>
+ <tr class="datetimeamt"> 
+ <td class="cell1" style="text-align:center">
+ Date
+ </td>
+ <td class="cell1" style="text-align:center">
+ Time
+ </td>
+ <td class="cell1" style="text-align:center">
+ Amount
+ </td > 
+ </tr>
+ <tr class="calender">
+ <td class="cell tabin" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ </tr>
+ <tr class="cal">
+ <td class="cell tabin" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ </tr>
+     <tr class="calender">
+ <td class="cell tabin" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ </tr>
+     <tr class="cal">
+ <td class="cell tabin" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ <td class="cell" style="text-align:center"></td>
+ </tr>
+ </table>
+ </div>
+     <div> <br /><br /><br /><br /><br />
+ </div>
+ <div class="footerDiv"> <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br />
+ </div>
+ <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBacknext();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="addremove" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header2" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Add/Remove Card</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr> 
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1"> CARD NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"> <input type="text" class="textbox3" id="txtcardnumber" maxlength="20" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1"> AMOUNT</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"> <input type="number" class="textbox3" id="txtcardamt" max="10" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1"> CARD HOLDERS NAME</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"> <input type="text" class="textbox3" id="txtcardholder" maxlength="15" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"> 
+ <div class="textstyle1" style="width:45%;float:left;">
+ EXPIRY DATE
+ </div> 
+ <div class="textstyle1" style="width:45%;float:right;">
+ CVV
+ </div>
+ </td>
+ <td class="tdwidth"></td>
+ </tr> 
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"> 
+ <div class="textstyle1" style="width:45%;float:left;">
+ <input type="text" class="textbox3" id="txtexpiry" readonly="true"/>
+ </div> 
+ <div class="textstyle1" style="width:45%;float:right;">
+ <input type="number" class="textbox3" id="txtcvv" max="3" />
+ </div>
+ </td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /><br /><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/submitbutton.png" class="regsubbtn" onclick="PayCardBills();" /></td>
+ </tr>
+ <tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br />
+ </td>
+ </tr>
+   <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ <!-- popup div-->
+ <div class="view divpop" id="divpopupAddRemove" style="height: 30%; width: 80%; left: 10%; top: 40%;display:none">
+ <div id="tblAddRemove" style="width:100%;"> 
+ <div><br /><br /></div>
+ <div>
+ <div style="width:10%;float:left"> 
+ </div>
+ <div style="width:80%;float:left;" id="rusureAddRemove">&nbsp;</div>
+ <div style="width:10%;float:left">
+ </div>
+ </div>
+ <div><br /><br /></div>
+ <div>
+ <div style="width:40%;float:left;text-align:right">
+ <img alt="" src="public/images/EAslicing/yesplease.png" onclick="yespleaseAddRemove();" />
+ </div>
+ <div style="width:20%;float:left;">&nbsp;</div>
+ <div style="width:40%;float:left;text-align:left">
+ <img alt="" src="public/images/EAslicing/nothanks.png" id="nothanksAddRemove" onclick="nothankshideAddRemove()" />
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- popup div-->
+ </div>
+ <div data-role="page" id="airtime" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header3" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">  
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Airtime</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoVodacom()">
+ <td class="textstyle1 gorow"> VODACOM</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoVodacom()">
+ <td class="textstyle1 gorow"> CELLC</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoVodacom()">
+ <td class="textstyle1 gorow"> MTN</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoVodacom()">
+ <td class="textstyle1 gorow"> 8TA</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gotoVodacom()">
+ <td class="textstyle1 gorow"> VIRGIN MOBILE</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+<tr class="footerDiv">
+ <td>
+ <br />
+ <br />
+ </td>
+ </tr>
+   <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>     
+ <div data-role="page" id="bills" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header4" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">  
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Bills</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER YOUR BILL ACCOUNT NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox3" id="txtBillNumber" maxlength="20"></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER AMOUNT</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="number" class="textbox3" id="txtBillAmount" max="10"></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/confirm22.png" class="regsubbtn" onclick="PayBills();" /></td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br />
+ </td>
+ </tr>
+    <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>      
+ <div data-role="page" id="eftdetails" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header6" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">  
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">EFT Details</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr>
+ <td style="width:5%;">
+ </td>
+ <td class="transaction1 ref">
+ Please use your mobile number as reference
+ </td>
+ <td style="width:5%;">
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">BANK</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox1" id="txtbank" maxlength="50" disabled="disabled" value="Standard Bank" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">BRANCH</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="textbox1" id="txtbranch" disabled="disabled" value="123456" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ACCOUNT NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="textbox1" id="txtacnum" disabled="disabled" value="123456789" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/submitbutton.png" class="regsubbtn"onclick="" /></td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+    <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr> 
+ </table>
+ </div>
+        <!-- end new header -->
+ <div data-role="page" id="electricity" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header7" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Electricity</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER YOUR METER NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="number" class="textbox3" id="txtMeterNumber" max="10" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER AMOUNT</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="number" class="textbox3" id="txtElectricityAmt" max="15" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/confirm22.png" class="regsubbtn" onclick="PayElectricityBills();" /></td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="vodacom" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header8" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;" id="vodacomheader">Vodacom</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="tdbgc" onclick="gotoairtimevoucher()">
+ <td class="textstyle1 gorow"> AIRTIME VOUCHER</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="">
+ <td class="textstyle1 gorow">SMS PACKAGE</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+<tr>
+ <td>
+ <br /><br /><br /><br /><br />
+ </td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+<tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="trdtls" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header9" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left; padding-left:5%;">Transaction Details</div>
+ <div class="regcol2" style="float:right;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr>
+ <td style="width:5%;">
+ </td>
+ <td class="transaction1" colspan="2">Do you confirm the purchase of Vodacom airtime below
+ </td>
+ <td style="width:5%;">
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">AIRTIME VALUE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input class="textbox2" id="txtair" maxlength="10"/></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">SERVICE FEE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input class="textbox2" id="txtfee" maxlength="10" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">TOTAL</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input class="textbox2" id="txttotal" maxlength="10" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center;" colspan="3"><img alt=" " src="public/images/EAslicing/next.png" class="regsubbtn" onclick="Transactions();" /></td>
+ </tr>
+ <tr class="footerDiv">
+ <td>
+ <br />
+ </td>
+ </tr>
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <!-- 1 test --> 
+ <div data-role="page" id="transactionsuccessful" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header11" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2" >
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Transaction Successful</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div class="transaction1" style="margin:2% 5% 0% 5%"> 
+ Many thanks your transaction has been successful 
+ </div> 
+     <div>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+<div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+ <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</div>
+ </div> 
+ <!-- 2 test -->  
+ <div data-role="page" id="coupons" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+<div class="header14" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">My Coupons</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">GIVE THE CASHIER THIS WICODE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input name="Text1" type="text" class="textbox2" id="Text1" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER DATE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input name="Text1" type="text" class="textbox2" id="Date1" readonly="readonly"/></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/confirm22.png" class="regsubbtn" onclick="gotocoupons()" /></td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+      <tr>
+<td colspan="23lic/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="picknpay" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header15" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2">
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Pick n Pay Coupons</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div> 
+ <table style="width:100%;height:100%" cellspacing="0" cellpadding="0" > 
+    <tr>
+ <td class="piatto">
+<div class="coupon" onclick="gotopnp()" style="float:left;  padding-left:5%; width:70% !important;"> 
+ DProduct x-R2.50</div>
+  <div class="picknpayimg" style="float:left;">
+ <img src="public/images/EAslicing/moreinfo.png" alt="" onclick="gotowcd()" class="submitbtn"/> 
+ </div>
+ </tr>
+ <tr>
+ <td class="piatto">
+<div class="coupon" onclick="gotopnp()" style="float:left; padding-left:5%; width:70% !important;"> 
+ DProduct x-R2.50</div>
+  <div class="picknpayimg" style="float:left;">
+ <img src="public/images/EAslicing/moreinfo.png" alt="" onclick="gotowcd()" class="submitbtn"/> 
+ </div>
+ </tr>
+ </table> 
+ </div> 
+     <div >
+ <br /><br /><br /><br /><br /><br />
+ </div> 
+<div class="footerDiv">
+ <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+ </div> 
+ <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="productdtls" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+  <div class="header16" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2">
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Product X Details</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div class="prdt">
+ Loreum is simply dummy text of the prinitng and typesetting industry. Loreum Ipsum
+ has been the industry's standard dummy text ever since the 1500's, when an unknown
+ printer took a gallery of type and scrambled it to make a type specimen book. it
+ has survived not only five centuries, but also the leap into electronic typesetting,
+ remaining essentially unchanged. It was popularised in the 1960s with the release
+ of Letrasetsheets containing Loreum Ipsum passages, and more recently with desktop
+ publishing software likeAldus PageMaker including versions of Loreum Ipsum.
+ </div>
+<div class="footerDiv"> <br /><br /><br />
+ </div>
+ <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="payinstore" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+<div class="header17" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Pay-In-Store</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">GIVE THE CASHIER THIS WICODE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox1" id="txtcode" maxlength="10" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER DATE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="text" class="textbox1" id="txtdate" readonly="readonly" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+<tr >
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:70%;text-align:center" colspan="3"><img alt=" " src="public/images/EAslicing/confirm22.png" class="regsubbtn" onclick="payinstore()" /></td>
+ </tr>
+ <tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div> 
+ <div data-role="page" id="storesinyrarea" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+ <div class="header21" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2">
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Store in your Area</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div>
+ <table cellspacing="0" cellpadding="0" style="width:100%;height:100%" id="tblmerchantsdetails">
+ <tr>
+ <td colspan="3" style="padding: 1% 0 1% 0;border-bottom: 2px solid black;">
+ <div style="margin:0 5% 0 5%; width:90%"> 
+ <div class="storetext">
+ Store Name 01
+ </div>
+ <div class="addresstext">
+ Address
+ </div>
+ <div class="contenttxt">
+ Lorem Ipsum is simply dummy text of printing and typesetting industry.
+ </div>
+ <div class="addresstext">
+ Opens from 10 :00 Am to 5:00 PM
+ </div>
+ <div class="contenttxt">
+ Lorem Ipsum is simply dummy text of printing and typesetting industry. Loreum Ipsum
+ has been the Industrys standard dummy text ever since the 1500s.
+ </div>
+ </div>
+ </td>
+ </tr> 
+ </table>
+ </div>
+<div class="footerDiv"> <br /><br /><br /><br /><br /><br /><br /><br />
+ </div>
+ <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="storedetails" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+ <div class="header22" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <div class="trheight2">
+ <div class="middlecontent3" >
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;"> Store Details</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </div>
+ </div>
+ <div>
+ <table class="piatto" cellspacing="4" cellpadding="2" style="width:100%;height:100%;"> 
+ <tr>
+ <td class="divheading">
+ <div> Manager</div>
+ <div> <br /> </div>
+ <div> Tel:</div>
+ <div> <br /> </div>
+ <div> Fax:</div>
+ <div> <br /> </div>
+ <div> Business Hours</div>
+ <div> <br /> </div>     
+ <div id="StoreBusinessHours" class="divcontent"> </div>
+ <div> <br /> </div>
+ </td>
+ </tr>
+ </table>
+ </div>
+<div class="footerDiv"> <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br />
+ </div>
+     <div>
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</div>
+ </div>
+ <div data-role="page" id="topupinstore" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+<div class="header24" style="height:80px;width:100%;overflow-x:hidden"></div>   
+<table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Top-Up in store</div>
+ <div class="regcol2" style="float:left;"><img src="public/images/EAslicing/lock.png" class="loginimg1" /></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">GIVE THE CASHIER THIS WICODE</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox1" id="Text2" disabled="disabled" value="1573943" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+    <tr>
+ <td>
+ <br /><br /><br /><br />
+ <br /><br />
+ </td>
+ </tr>
+<tr class="footerDiv">
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br />
+ </td>
+ </tr>
+    <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr> 
+ </table>
+ </div>
+ <div data-role="page" id="avldenom" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+<div class="header25" style="height:80px;width:100%;overflow-x:hidden"></div>  
+<table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;"> Available Denominations</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr class="tdbgc" onclick="gototransactiondetails()">
+ <td class="textstyle1 gorow"> R275.00</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gototransactiondetails()">
+ <td class="textstyle1 gorow"> R11.00</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gototransactiondetails()">
+ <td class="textstyle1 gorow"> R55.00</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gototransactiondetails()">
+ <td class="textstyle1 gorow"> R29.00</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gototransactiondetails()">
+ <td class="textstyle1 gorow"> R12.00</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+ <tr class="tdbgc" onclick="gototransactiondetails()">
+ <td class="textstyle1 gorow">R5.00</td>
+ <td class="regcol2">
+ <img src="public/images/EAslicing/singlerightarrow.png" alt="" class="rightarr" />
+ </td>
+ </tr> 
+<tr class="footerDiv">
+ <td>
+ <br /><br />
+ </td>
+ </tr>     
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <div data-role="page" id="trdts" style="background-image:url('public/images/EAslicing/bgrepete.png');background-repeat:repeat;overflow-x:hidden;">
+ <div class="header26" style="height:80px;width:100%;overflow-x:hidden"></div>  
+ <table class="maintable" cellspacing="0" cellpadding="0">
+ <tr class="trheight2" >
+ <td class="middlecontent3" colspan="3">
+ <div style="height:10px"></div>
+ <div class="regcol1" style="float:left">&nbsp;</div>
+ <div class="regtopHeader1" style="float:left;">Transaction Details</div>
+ <div class="regcol2" style="float:left;"></div>
+ <div>&nbsp;</div>
+ <div style="height:10px"></div>
+ </td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER YOUR EASY PAYBILL NUMBER</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="tdwidth1"><input type="text" class="textbox2" id="Text3" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth"></td>
+ <td class="textstyle1">ENTER AMOUNT</td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr style="height:10%">
+ <td class="tdwidth" ></td>
+ <td class="tdwidth1"><input type="number" class="textbox2" id="Number1" /></td>
+ <td class="tdwidth"></td>
+ </tr>
+ <tr>
+ <td><br /></td>
+ </tr>
+ <tr style="height:10%">
+ <td style="width:100%;text-align:center" colspan="3">
+ <div style="width:10%;float:left;height:50px;"></div>
+ <div style="width:35%;float:left"> <img src="public/images/EAslicing/Btn/Confirmbutton.png" class="regsubbtn" /></div>
+ <div style="width:10%;float:left;height:50px;"></div>
+ <div style="width:35%;float:left"> <img src="public/images/EAslicing/Btn/backbutton.png" class="regsubbtn" onclick="goBack();" alt=""></div>
+ <div style="width:10%;float:left;height:50px;"></div>
+ </td> 
+ </tr> 
+ <tr>
+ <td>
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ <br /><br /><br /><br /><br /><br /><br /><br />
+ </td>
+ </tr>
+     <tr>
+<td colspan="3">
+<img src="public/images/EAslicing/backbutton.png" class="headerimgstyle1" onclick="goBack();"  style="margin-bottom:-5px;"  />
+</td>
+</tr>
+ </table>
+ </div>
+ <!-- popup div-->
+ <div id="div-viewelec" class="viewblack" style="text-align: center; margin: auto; display: none;
+ z-index: 99; position: fixed;">
+ <div class="view divpop" id="divpopupEcity" style="height: 250px; width: 80%; left: 10%; top: 25%;display:block">
+ <div><br /><br /></div>
+ <div>
+ <div style="width:10%;float:left"> 
+ </div>
+ <div style="width:80%;float:left;" id="rusureEcity"></div>
+ <div style="width:10%;float:left">
+ </div>
+ </div>
+ <div><br /><br /></div>
+ <div>
+ <div style="width:40%;float:left;text-align:right">
+ <img alt="" src="public/images/EAslicing/yesplease.png" onclick="yespleaseEcity();" />
+ </div>
+ <div style="width:20%;float:left;">&nbsp;</div>
+ <div style="width:40%;float:left;text-align:left">
+ <img alt="" src="public/images/EAslicing/nothanks.png" id="Img1" onclick="nothankshidepcity()" />
+ </div>
+ </div>
+ </div>
+ </div>
+ <!-- popup div-->
+ <div id="divmsg" style="display:none;"></div>      
+<script src="js/jqueryui.js" type="text/javascript"></script>      
+ <link rel="stylesheet" href="js/jqueryui.css" type="text/css" media="screen">
+ <script type="text/javascript" src="js/common.js"></script>
+ <script src="js/utils.js" type="text/javascript"></script>
+<script src="js/RandgoServices.js" type="text/javascript"></script>
+ </body>
+</html>

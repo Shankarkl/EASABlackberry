@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+xmlns:gap = "http://phonegap.com/ns/1.0"
+xmlns:rim="http://www.blackberry.com/ns/widgets"
+id = "com.phonegap.example"
+versionCode="1"
+version = "1.0.0">
+  <name>Europ Assist</name>
+  <description>
+    Europ Assists BB Application
+  </description>
+  <author href="https://build.phonegap.com" email="support@phonegap.com">
+    starsoft
+  </author>
+  <gap:platform name="blackberry" />
+  <icon src="icon.jpg" />
+  <icon src="res/icon/80.jpg"     gap:platform="blackberry" />
+  <icon src="res/icon/80.jpg"     gap:platform="blackberry" gap:state="hover"/>
+ <gap:splash src="res/screen/loading.png" gap:platform="blackberry" />
+  <rim:orientation mode="portrait" />
+  <preference name="permissions" value="none"/>
+   <preference name="orientation" value="portrait" />
+  <preference name="disable-cursor" value="false" />
+  <preference name="fullscreen" value="false" />
+  <preference name="phonegap-version" value="2.9.0" />
+  <preference name="target-device" value="universal" />  
+  <preference name="webviewbounce" value="true" />
+  <preference name="prerendered-icon" value="true" />
+  <preference name="stay-in-webview" value="false" />
+  <preference name="detect-data-types" value="true" />
+  <preference name="exit-on-suspend" value="false" />
+   <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="auto-hide-splash-screen" value="true" />
+  <feature id="blackberry.app">
+    <param name="orientation" value="portrait" />
+  </feature>
+ 
+</widget>
