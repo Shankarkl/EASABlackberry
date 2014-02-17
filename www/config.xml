@@ -12,7 +12,7 @@ version = "1.0.0">
   <author href="https://build.phonegap.com" email="support@phonegap.com">
     starsoft
   </author>
-  <gap:platform name="blackberry" />
+ <gap:platform name="blackberry" /> 
   <icon src="icon.jpg" />
   <icon src="res/icon/80.jpg"     gap:platform="blackberry" />
   <icon src="res/icon/80.jpg"     gap:platform="blackberry" gap:state="hover"/>
@@ -33,6 +33,7 @@ version = "1.0.0">
     <preference name="auto-hide-splash-screen" value="true" />
   <feature id="blackberry.app">
     <param name="orientation" value="portrait" />
-  </feature>
- 
+  </feature> 
+  <content src="index.html" />
+  <!--<rim:cache disableAllCache="false" aggressiveCacheAge="2592000" maxCacheSizeTotal="1024" maxCacheSizeItem="128" />-->
 </widget>

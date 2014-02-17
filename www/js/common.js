@@ -1,66 +1,44 @@
-// JScript source code
+ // JScript source code
 var pageData = ["splscreen"];
 var currentPage, prevPage, userName, passowrd, HomeID, RoadID, MedicalID, legalID, TravelID = '';
+var Pagename = ''; localStorage.count = 0; 
 /*******************************************************************************
-* FUNCTION TO CALL ANY WEB SERVICE
+* FUNCTION TO CALL ANY WEB SERVICE //live link http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx
 ******************************************************************************/
 CallWebService = function (url, inputData, method, contentType, callback) {
-document.getElementById('loaddingimg').style.display = "none";
-try {
-var xhr;
+$(window).scrollTop(0);
+document.getElementById('loaddingimg').style.top = '0';
+document.getElementById('loaddingimg').style.display = "block";
+try {var xhr;
 if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 xhr = new XMLHttpRequest();
-} else {// code for IE6, IE5
+} else {// code for IE6, IE5bacl
 xhr = new ActiveXObject("Microsoft.XMLHTTP");
-}
+}  
 xhr.onreadystatechange = function () {
 if (xhr.readyState == 4 && xhr.status == 200) {
 document.getElementById('loaddingimg').style.display = "none";
 callback(this.responseText);
 }
 if (xhr.readyState == 4 && (xhr.status == 404 || xhr.status == 403 || xhr.status == 500 || xhr.status == 504)) {
-window.localStorage.setItem("randgosessionid", "null");
-document.getElementById('txtLoginUserName').value = "";
-document.getElementById('txtLoginPassword').value = "";
 alert("The System is temporarily unavailable, please try again later.");
 document.getElementById('loaddingimg').style.display = "none";
-prevPage = currentPage;
-$.mobile.changePage('#log', {
-transition: "none",
-reverse: true,
-changeHash: false
-});
-currentPage = 'log';
-pageData.push(currentPage)
 }
 };
 xhr.onerror = function (e) {
-window.localStorage.setItem("randgosessionid", "null");
-document.getElementById('txtLoginUserName').value = "";
-document.getElementById('txtLoginPassword').value = "";
 alert("The System is temporarily unavailable, please try again later.");
 document.getElementById('loaddingimg').style.display = "none";
-prevPage = currentPage;
-$.mobile.changePage('#log', {
-transition: "none",
-reverse: true,
-changeHash: false
-});
-currentPage = 'log';
-pageData.push(currentPage);
 };
 xhr.open(method, url);
 xhr.setRequestHeader("Content-Type", contentType);
-xhr.timeout = 4000;
+xhr.timeout = 120000;
 xhr.ontimeout = function (e) {
 alert("The System is temporarily unavailable, please try again later.");
-document.getElementById('loaddingimg').style.display = "block";
-document.getElementById('txtLoginUserName').value = "";
-document.getElementById('txtLoginPassword').value = "";
+document.getElementById('loaddingimg').style.display = "none";
+//$('#txtLoginUserName,#txtLoginPassword').val('');
 }
 if (inputData !== '') {
 if (window.navigator.onLine == true) {
-document.getElementById('loaddingimg').style.display = "block";
 xhr.send(inputData);
 } else {
 alert('No network connection,Please check your network connectivity!');
@@ -68,7 +46,6 @@ document.getElementById('loaddingimg').style.display = "none";
 }
 } else {
 if (window.navigator.onLine == true) {
-document.getElementById('loaddingimg').style.display = "block";
 xhr.send(null);
 } else {
 alert('No network connection,Please check your network connectivity!');
@@ -81,23 +58,20 @@ document.getElementById('loaddingimg').style.display = "none";
 }
 }
 function checkremember() {
+try {
 $("#hmimg,#mdimg,#rdimg,#lgimg,#tlimg").hide();
 try {
 if (window.localStorage.getItem("loginID") == 'null' || window.localStorage.getItem("loginID") == null || window.localStorage.getItem("loginID") == undefined || window.localStorage.getItem("loginID") == 0) {
 prevPage = currentPage;
-$.mobile.changePage('#indexPage', {//indexservice //indexPage indexbenefit goeat indexprofile
+$.mobile.changePage('#indexPage', {
 transition: "none",
 reverse: true,
 changeHash: false
 });
 currentPage = 'indexPage';
 pageData.push(currentPage);
-$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
-$("#FAQtbl tr").remove();
-$("#tblquestionans tr").remove();
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
 $('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
 window.localStorage.setItem("randgosessionid", "null");
 localStorage.gettravel = 0;
@@ -106,24 +80,28 @@ localStorage.getroad = 0;
 localStorage.getmedical = 0;
 localStorage.gethome = 0;
 } else {
+Pagename = 'indexservice';
 $("#NOproductDiv").hide();
 $("#divhm,#divmm,#divrd,#divle,#divtr").hide();
 $("#hme,#medical,#roadas,#legalas,#travelas").hide(); //color img
 $(".trheight5").hide();
-gotoService();
+inputData = '<?xml version="1.0" encoding="utf-8"?>';
+inputData = inputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';
+inputData = inputData + '<soap:Body>';
+inputData = inputData + '<EAAppConfig  xmlns="http://tempuri.org/" />';
+inputData = inputData + '</soap:Body>';
+inputData = inputData + '</soap:Envelope>';
+CallWebService('http://dsg.star-knowledge.com/service.asmx', inputData, 'POST', 'text/xml', checkAppLogin);
 }
 } catch (ex) {
-alert(ex + 'chec re');
 }
 init();
+} catch (ex) {
+}
 }
 function gotoWallet() {
 $('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
-$("#FAQtbl tr").remove();
-$("#tblquestionans tr").remove();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 if (checkLogin()) {
 prevPage = currentPage;
@@ -141,9 +119,7 @@ function gotoBenifit() {
 // alert("bbbbbb");
 $('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
 if (checkLogin()) {
 prevPage = currentPage;
 $.mobile.changePage('#indexbenefit', {
@@ -153,17 +129,34 @@ changeHash: false
 });
 currentPage = 'indexbenefit';
 pageData.push(currentPage);
-GetDisplayCategories();
 document.getElementById('benefitbackbtn').style.display = "none";
+var randgoInputData = ''; randgoInputData = '<?xml version="1.0" encoding="utf-8"?>'; randgoInputData = randgoInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; randgoInputData = randgoInputData + '<soap:Body>'; randgoInputData = randgoInputData + '<Login xmlns="http://tempuri.org/">'; randgoInputData = randgoInputData + '<lUserName>ws@europassistance</lUserName>'; randgoInputData = randgoInputData + '<lPassword>e@s@ws</lPassword>'; randgoInputData = randgoInputData + '</Login>'; randgoInputData = randgoInputData + '</soap:Body>'; randgoInputData = randgoInputData + '</soap:Envelope>'; CallWebService('http://www.randgo.com/3rdpartyservices/Service.asmx', randgoInputData, 'POST', 'text/xml', RandoLoginCallBackNew);
 }
 }
+function RandoLoginCallBackNew(responseData) {
+try {
+responseData = responseData.replace(/&gt;/gi, '>');
+responseData = responseData.replace(/&lt;/gi, '<');
+var parser = new DOMParser();
+if (responseData !== "") {
+var xmlDoc = parser.parseFromString(responseData, "text/xml");
+if (xmlDoc.getElementsByTagName("status")[0] != null && xmlDoc.getElementsByTagName("status")[0].textContent !== "") {
+window.localStorage.setItem("randgosessionid", xmlDoc.getElementsByTagName("sessionid")[0].textContent);
+GetDisplayCategories();
+}
+}
+else {
+alert('No Data Found');
+return false;
+}
+} catch (exp) {
+//alert('RandoLoginCallBackNew' + exp);
+}
+}
+
 function gotoProfile() {
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
-$("#FAQtbl tr").remove();
-$("#tblquestionans tr").remove();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
 if (checkLogin()) {
 prevPage = currentPage;
 $('#txtname,#txtsname,#txtemail,#txtcellno,#txtid,#txtnewpin,#txtconpin,#txtusername').val('');
@@ -178,13 +171,8 @@ GetProfileDetails();
 }
 }
 function gotoHelp() {
-$('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
-$(".header2").empty();
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
-$("#tblquestionans tr").remove();
-$("#FAQtbl tr").remove();
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
 if (checkLogin()) {
 prevPage = currentPage;
 $.mobile.changePage('#indexhelp', {
@@ -205,7 +193,7 @@ document.getElementById('helpbackbtn').style.display = "none";
 * CREATED DATE : Jan 18 2014
 ******************************************************************************************************/
 function DisplayHelpDetails(qtnvalue) {
-    var helpInputData='';helpInputData='<?xml version="1.0" encoding="utf-8"?>';helpInputData=helpInputData+'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';helpInputData=helpInputData+'<soap:Body>';helpInputData=helpInputData+'<GetFAQs xmlns="http://tempuri.org/">';helpInputData=helpInputData+'<FAQID> '+qtnvalue+' </FAQID>';helpInputData=helpInputData+'</GetFAQs>';helpInputData=helpInputData+'</soap:Body>';helpInputData=helpInputData+'</soap:Envelope>';CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=GetFAQs',helpInputData,'POST','text/xml',DisplayHelpDetailsCallback);
+var helpInputData = ''; helpInputData = '<?xml version="1.0" encoding="utf-8"?>'; helpInputData = helpInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; helpInputData = helpInputData + '<soap:Body>'; helpInputData = helpInputData + '<GetFAQs xmlns="http://tempuri.org/">'; helpInputData = helpInputData + '<FAQID> ' + qtnvalue + ' </FAQID>'; helpInputData = helpInputData + '</GetFAQs>'; helpInputData = helpInputData + '</soap:Body>'; helpInputData = helpInputData + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=GetFAQs', helpInputData, 'POST', 'text/xml', DisplayHelpDetailsCallback);
 //local id http://192.168.2.112:8079/EuropeAssistStaticDataWS.asmx?op=GetFAQs http://117.247.177.228:8079/EuropeAssistStaticDataWS.asmx?op=GetFAQs
 }
 function DisplayHelpDetailsCallback(responseData) {
@@ -223,15 +211,8 @@ var faqlist = xmlDoc.getElementsByTagName("FAQs");
 for (var i = 0; i < faqlist.length; i++) {
 var rowcount = gettblhelp.rows.length;
 var row = gettblhelp.insertRow(rowcount);
-var question = xmlDoc.getElementsByTagName("FAQName")[i].textContent;
-question = question.replace(/&lt;/g, '<');
-question = question.replace(/&gt;/g, '>');
-question = question.replace(/&quot;/g, '"');
-question = question.replace(/&nbsp;/g, ' ');
-question = question.replace(/&amp;/g, '&')
-question = question.replace(/&#39;/g, "'");
-var faqrowid = xmlDoc.getElementsByTagName("FAQID")[i].textContent;
-row.setAttribute('id', 'row' + faqrowid);
+var question = replacespecilChar(xmlDoc.getElementsByTagName("FAQName")[i].textContent);
+row.setAttribute('id', 'row' + xmlDoc.getElementsByTagName("FAQID")[i].textContent);
 var cell = row.insertCell(0);
 /*** question ***/
 var divques = document.createElement("div");
@@ -249,7 +230,7 @@ cell.appendChild(divimg);
 divimg.setAttribute('class', 'regcol1new');
 cell.setAttribute('class', 'qtnnew');
 row.onclick = function () {
-document.getElementById('qtnansbackbtn').style.display = "none";
+$(window).scrollTop(0);
 var FAQhelpID = this.id;
 FAQhelpID = FAQhelpID.replace('row', '');
 $("#tblquestionans tr").remove();
@@ -260,14 +241,14 @@ reverse: true,
 changeHash: false
 });
 currentPage = 'qtnanswers';
-pageData.push(currentPage);
+pageData.push(currentPage); document.getElementById('qtnansbackbtn').style.display = "none";
 DisplayQuestionAnswers(FAQhelpID);
 }
 }
 }
 }
 } catch (exp) {
-alert("exp fay:::::::::::" + exp)
+//alert("exp fay:::::::::::" + exp)
 }
 }
 /*****************************************************************************************************
@@ -276,7 +257,7 @@ alert("exp fay:::::::::::" + exp)
 * CREATED DATE : Jan 18 2014
 ******************************************************************************************************/
 function DisplayQuestionAnswers(FAQhelpID) {
-    var helpInputData = ''; helpInputData = '<?xml version="1.0" encoding="utf-8"?>'; helpInputData = helpInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; helpInputData = helpInputData + '<soap:Body>'; helpInputData = helpInputData + '<GetFAQs xmlns="http://tempuri.org/">'; helpInputData = helpInputData + '<FAQID>' + FAQhelpID + '</FAQID>'; helpInputData = helpInputData + '</GetFAQs>';helpInputData=helpInputData+'</soap:Body>';helpInputData=helpInputData+'</soap:Envelope>';CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=GetFAQs',helpInputData,'POST','text/xml',DisplayQuestionAnswersCallback);
+var helpInputData = ''; helpInputData = '<?xml version="1.0" encoding="utf-8"?>'; helpInputData = helpInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; helpInputData = helpInputData + '<soap:Body>'; helpInputData = helpInputData + '<GetFAQs xmlns="http://tempuri.org/">'; helpInputData = helpInputData + '<FAQID>' + FAQhelpID + '</FAQID>'; helpInputData = helpInputData + '</GetFAQs>'; helpInputData = helpInputData + '</soap:Body>'; helpInputData = helpInputData + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=GetFAQs', helpInputData, 'POST', 'text/xml', DisplayQuestionAnswersCallback);
 }
 function DisplayQuestionAnswersCallback(responseData) {
 try {
@@ -293,19 +274,10 @@ var faqlist = xmlDoc.getElementsByTagName("FAQs");
 for (var i = 0; i < faqlist.length; i++) {
 var rowcount = gettblquestionans.rows.length;
 var row = gettblquestionans.insertRow(rowcount);
-// var rowid = xmlDoc.getElementsByTagName("FAQID")[i].textContent;
-var question = xmlDoc.getElementsByTagName("FAQName")[i].textContent;
-var ans = xmlDoc.getElementsByTagName("Description")[i].textContent;
 var cell1 = row.insertCell(0);
 cell1.setAttribute('width', '100%');
 var lblquestion = document.createElement("label");
-var Cmque = xmlDoc.getElementsByTagName("FAQName")[i].textContent;
-Cmque = Cmque.replace(/&lt;/g, '<');
-Cmque = Cmque.replace(/&gt;/g, '>');
-Cmque = Cmque.replace(/&quot;/g, '"');
-Cmque = Cmque.replace(/&nbsp;/g, ' ');
-Cmque = Cmque.replace(/&amp;/g, '&')
-Cmque = Cmque.replace(/&#39;/g, "'");
+var Cmque = replacespecilChar(xmlDoc.getElementsByTagName("FAQName")[i].textContent);
 lblquestion.innerHTML = Cmque;
 lblquestion.setAttribute('class', 'textstyle3 qtnbot');
 cell1.appendChild(lblquestion);
@@ -314,23 +286,18 @@ var row2 = gettblquestionans.insertRow(rowcount);
 var cell2 = row2.insertCell(0);
 cell2.setAttribute('width', '100%');
 var lblans = document.createElement("label");
-var lblansremovebreak = xmlDoc.getElementsByTagName("Description")[i].textContent;
-lblansremovebreak = lblansremovebreak.replace(/&lt;/g, '<');
-lblansremovebreak = lblansremovebreak.replace(/&gt;/g, '>');
-lblansremovebreak = lblansremovebreak.replace(/&quot;/g, '"');
-lblansremovebreak = lblansremovebreak.replace(/&nbsp;/g, ' ');
-lblansremovebreak = lblansremovebreak.replace(/&amp;/g, '&')
-lblansremovebreak = lblansremovebreak.replace(/&#39;/g, "'");
+var lblansremovebreak = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 lblans.innerHTML = lblansremovebreak;
 lblans.setAttribute('class', 'qtncontent');
 cell2.appendChild(lblans);
+$("a").removeAttr('href');
 }
 }
 }
 } catch (exp) {
-alert("exp:::::::::" + exp);
 }
 }
+function replacespecilChar(dataVal) { dataVal = dataVal.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#39;/g, "'"); return dataVal; }
 function gotoBalance() {
 if (checkLogin()) {
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
@@ -344,9 +311,7 @@ changeHash: false
 });
 currentPage = 'yourbalance';
 pageData.push(currentPage);
-document.querySelector(".header2").innerHTML = 'fd';
 }
-//Checkbalance();
 }
 /*********************Topup**************/
 function gotoAddremove() {
@@ -354,11 +319,7 @@ if (checkLogin()) {
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> ';
 $(".header2").append(clonedDiv);
-prevPage = currentPage;
-document.getElementById('txtcardnumber').value = "";
-document.getElementById('txtcardamt').value = "";
-document.getElementById('txtcardholder').value = "";
-document.getElementById('txtcvv').value = "";
+prevPage = currentPage; $('#txtcvv,#txtcardholder,#txtcardamt,#txtcardamt').val('');
 $.mobile.changePage('#addremove', {
 transition: "none",
 reverse: true,
@@ -400,17 +361,7 @@ pageData.push(currentPage);
 }
 /***************trdts**************************/
 function gotoBills() {
-var paybill = document.getElementById('txtpay').value;
-var amount = document.getElementById('txtamt').value;
-if (paybill == "") {
-alert("Please enter pay bill number");
-return false;
-}
-if (amount == "") {
-alert("Please enter amount");
-return false;
-}
-return true;
+var paybill = document.getElementById('txtpay').value; var amount = document.getElementById('txtamt').value; if (paybill == "") { alert("Please enter pay bill number"); return false } if (amount == "") { alert("Please enter amount"); return false } return true;
 } /*************************payUse**************************/
 function gotoPaystore() {
 if (checkLogin()) {
@@ -449,9 +400,7 @@ function gotoElecPage() {
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> ';
 $(".header7").append(clonedDiv);
-prevPage = currentPage;
-document.getElementById('txtMeterNumber').value = "";
-document.getElementById('txtElectricityAmt').value = "";
+prevPage = currentPage; $('#txtMeterNumber,#txtElectricityAmt').val('');
 if (checkLogin()) {
 $.mobile.changePage('#electricity', {
 transition: "none",
@@ -467,9 +416,7 @@ if (checkLogin()) {
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> ';
 $(".header4").append(clonedDiv);
-prevPage = currentPage;
-document.getElementById('txtBillNumber').value = "";
-document.getElementById('txtBillAmount').value = "";
+prevPage = currentPage; $('#txtBillNumber,#txtBillAmount').val('');
 $.mobile.changePage('#bills', {
 transition: "none",
 reverse: true,
@@ -485,9 +432,7 @@ if (checkLogin()) {
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> ';
 $(".header18").append(clonedDiv);
-prevPage = currentPage;
-document.getElementById('txtfrnd').value = "";
-document.getElementById('txtfriendAmount').value = "";
+prevPage = currentPage; $('#txtfrnd,#txtfrnd').val('');
 $.mobile.changePage('#payafriend', {
 transition: "none",
 reverse: true,
@@ -680,10 +625,6 @@ changeHash: false
 });
 currentPage = 'storesinyrarea';
 pageData.push(currentPage);
-var provinceID = document.getElementById('selectprovinceid').value;
-var cityID = document.getElementById('selectcityid').value;
-var suburbID = document.getElementById('selectsuburbid').value;
-//DisplayMerchantsDetails(provinceID, cityID, suburbID);
 }
 }
 /***added 21/10/13 *****/
@@ -748,16 +689,6 @@ pageData.push(currentPage);
 //Airtimedenomlist();
 }
 }
-function login() {
-prevPage = currentPage;
-$.mobile.changePage('#log', {
-transition: "none",
-reverse: true,
-changeHash: false
-});
-currentPage = 'log';
-pageData.push(currentPage);
-}
 function goToMainIndex() {
 prevPage = currentPage;
 $.mobile.changePage('#indexPage', {
@@ -769,7 +700,6 @@ currentPage = 'indexPage';
 pageData.push(currentPage);
 }
 function goBacknext() {
-//   alert(currentPage);
 if (currentPage == 'log' || currentPage == 'RegFstPage') {
 $(window).scrollTop(0);
 pageData.pop();
@@ -778,7 +708,7 @@ transition: "none",
 reverse: true,
 changeHash: false
 });
-} else if (currentPage == 'indexwallet' || currentPage == 'indexprofile' || currentPage == 'indexhelp' || currentPage == 'indexbenefit') {
+} else if (currentPage == 'indexwallet' || currentPage == 'indexprofile' || currentPage == 'indexhelp' || currentPage == 'indexbenefit' || currentPage == 'clickformoreinfo') {
 $(window).scrollTop(0);
 pageData.pop();
 $.mobile.changePage('#indexservice', {
@@ -788,8 +718,6 @@ changeHash: false
 });
 } else if (currentPage == 'goeat') {
 $(window).scrollTop(0);
-//document.getElementById('loaddingimg').style.display = "block";
-//setTimeout(function () {
 pageData.pop();
 currentPage = pageData[pageData.length - 1];
 $.mobile.changePage('#merchantnames', {
@@ -797,12 +725,8 @@ transition: "none",
 reverse: true,
 changeHash: false
 });
-//document.getElementById('loaddingimg').style.display = "none";
-//}, 60);
 } else if (currentPage == 'qtnanswers') {
 $(window).scrollTop(0);
-//document.getElementById('loaddingimg').style.display = "block";
-//setTimeout(function () {
 pageData.pop();
 currentPage = pageData[pageData.length - 1];
 $.mobile.changePage('#indexhelp', {
@@ -810,12 +734,8 @@ transition: "none",
 reverse: true,
 changeHash: false
 });
-//document.getElementById('loaddingimg').style.display = "none";
-//}, 60);
 } else if (currentPage == 'merchantnames') {
 $(window).scrollTop(0);
-//document.getElementById('loaddingimg').style.display = "block";
-//setTimeout(function () {
 pageData.pop();
 currentPage = pageData[pageData.length - 1];
 $.mobile.changePage('#indexbenefit', {
@@ -823,8 +743,6 @@ transition: "none",
 reverse: false,
 changeHash: false
 });
-//document.getElementById('loaddingimg').style.display = "none";
-//}, 60);
 } else {
 $(window).scrollTop(0);
 pageData.pop();
@@ -837,70 +755,16 @@ changeHash: false
 }
 }
 function goBack() {
- $(window).scrollTop(0);
+$(window).scrollTop(0);
 $('#txtLoginUserName,#txtLoginPassword,#txtusernameregfirst,#txtpwregfirst,#txtconfirmpwregfirst,#txtmerchantsearch').val('');
 pageData.pop();
 currentPage = pageData[pageData.length - 1];
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> ';
 var getheader = '';
-if (currentPage == 'yourbalance') {
-getheader = "header12";
-} else if (currentPage == 'payafriend') {
-getheader = "header18";
-} else if (currentPage == 'buyprepaid') {
-getheader = "header5";
-} else if (currentPage == 'payuse') {
-getheader = "header19";
-} else if (currentPage == 'topup') {
-getheader = "header23";
-} else if (currentPage == 'storelocator') {
-getheader = "header20";
-} else if (currentPage == 'mycoupons') {
-getheader = "header13";
-} else if (currentPage == 'transactionhistory') {
-getheader = "header10";
-} else if (currentPage == 'addremove') {
-getheader = "header2";
-} else if (currentPage == 'airtime') {
-getheader = "header3";
-} else if (currentPage == 'bills') {
-getheader = "header4";
-} else if (currentPage == 'eftdetails') {
-getheader = "header6";
-} else if (currentPage == 'electricity') {
-getheader = "header7";
-} else if (currentPage == 'vodacom') {
-getheader = "header8";
-} else if (currentPage == 'trdtls') {
-getheader = "header9";
-} else if (currentPage == 'transactionsuccessful') {
-getheader = "header11";
-} else if (currentPage == 'coupons') {
-getheader = "header14";
-} else if (currentPage == 'picknpay') {
-getheader = "header15";
-} else if (currentPage == 'productdtls') {
-getheader = "header16";
-} else if (currentPage == 'payinstore') {
-getheader = "header17";
-} else if (currentPage == 'storesinyrarea') {
-getheader = "header21";
-} else if (currentPage == 'storedetails') {
-getheader = "header22";
-} else if (currentPage == 'topupinstore') {
-getheader = "header24";
-} else if (currentPage == 'avldenom') {
-getheader = "header25";
-} else if (currentPage == 'trdts') {
-getheader = "header26";
-} else if (currentPage == 'transactionsuccessful') {
-    getheader = "header11";
-} else {
-$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
-getheader = '';
-}
-$("." + getheader).append(clonedDiv);
+if (currentPage == 'yourbalance') { getheader = "header12" } else if (currentPage == 'payafriend') { getheader = "header18" } else if (currentPage == 'buyprepaid') { getheader = "header5" } else if (currentPage == 'payuse') { getheader = "header19" } else if (currentPage == 'topup') { getheader = "header23" } else if (currentPage == 'storelocator') { getheader = "header20" } else if (currentPage == 'mycoupons') { getheader = "header13" } else if (currentPage == 'transactionhistory') { getheader = "header10" } else if (currentPage == 'addremove') { getheader = "header2" } else if (currentPage == 'airtime') { getheader = "header3" } else if (currentPage == 'bills') { getheader = "header4" } else if (currentPage == 'eftdetails') { getheader = "header6" } else if (currentPage == 'electricity') { getheader = "header7" } else if (currentPage == 'vodacom') { getheader = "header8" } else if (currentPage == 'trdtls') { getheader = "header9" } else if (currentPage == 'transactionsuccessful') { getheader = "header11" } else if (currentPage == 'coupons') { getheader = "header14" } else if (currentPage == 'picknpay') { getheader = "header15" } else if (currentPage == 'productdtls') { getheader = "header16" } else if (currentPage == 'payinstore') { getheader = "header17" } else if (currentPage == 'storesinyrarea') { getheader = "header21" } else if (currentPage == 'storedetails') { getheader = "header22" } else if (currentPage == 'topupinstore') { getheader = "header24" } else if (currentPage == 'avldenom') { getheader = "header25" } else if (currentPage == 'trdts') { getheader = "header26" } else if (currentPage == 'transactionsuccessful') { getheader = "header11" }
+else {$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
+} $("." + getheader).append(clonedDiv);
 $.mobile.changePage('#' + currentPage, {
 transition: "none",
 reverse: true,
@@ -908,22 +772,7 @@ changeHash: false
 });
 }
 function payfrnd() {
-var peernumber = document.getElementById('txtfrnd').value;
-var amount = document.getElementById('txtfriendAmount').value;
-var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-var pattern = /^\d{10}$/;
-if (peernumber == "") {
-alert("Please enter friend cell number");
-return false;
-}
-if (!peernumber.match((pattern) || !peernumber.match(phoneno))) {
-alert("Please enter 10 digit number");
-return false;
-}
-if (amount == "") {
-alert("Please enter amount");
-return false;
-}
+var peernumber = document.getElementById('txtfrnd').value; var amount = document.getElementById('txtfriendAmount').value; var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; var pattern = /^\d{10}$/; if (peernumber == "") { alert("Please enter friend cell number"); return false } if (!peernumber.match((pattern) || !peernumber.match(phoneno))) { alert("Please enter 10 digit number"); return false } if (amount == "") { alert("Please enter amount"); return false }
 openpopupPayfriend();
 }
 var opts = {
@@ -983,83 +832,19 @@ pageData.push(currentPage);
 }
 }
 function PayCardBills() {
-var card = document.getElementById('txtcardnumber').value;
-var amount = document.getElementById('txtcardamt').value;
-var cardholder = document.getElementById('txtcardholder').value;
-var expirydate = document.getElementById('txtexpiry').value;
-var cvv = document.getElementById('txtcvv').value;
-var dateformat = /^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/;
-var expiry = new Date(document.getElementById('txtexpiry').value);
-var currentdate = Date.now();
-var cardnameexp = /^[A-Za-z ']*$/;
-if (card == "") {
-alert("Please enter card number");
-return false;
-}
-if (amount == "") {
-alert("Please enter amount");
-return false;
-}
-else if (is_valid = !/^[0-9]+$/.test(amount)) {
-alert("Please enter valid amount");
-return false;
-}
-if (cardholder == "") {
-alert("Please enter cardholder name");
-return false;
-}
-if (!cardholder.match(cardnameexp)) {
-alert("Please enter valid cardholder name");
-return false;
-}
-if (expirydate == "") {
-alert("Please enter expiry date");
-return false;
-}
-if (!expirydate.match(dateformat)) {
-alert("Invalid date format");
-return false;
-}
-if (expiry < currentdate) {
-alert("Exipry date should not be less than today's date");
-return false;
-}
-if (cvv == "") {
-alert("Please enter CVV");
-return false;
-}
+var card = document.getElementById('txtcardnumber').value; var amount = document.getElementById('txtcardamt').value; var cardholder = document.getElementById('txtcardholder').value; var expirydate = document.getElementById('txtexpiry').value; var cvv = document.getElementById('txtcvv').value; var dateformat = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/; var expiry = new Date(document.getElementById('txtexpiry').value); var currentdate = Date.now(); var cardnameexp = /^[A-Za-z ']*$/; if (card == "") { alert("Please enter card number"); return false } if (amount == "") { alert("Please enter amount"); return false } else if (is_valid = !/^[0-9]+$/.test(amount)) { alert("Please enter valid amount"); return false } if (cardholder == "") { alert("Please enter cardholder name"); return false } if (!cardholder.match(cardnameexp)) { alert("Please enter valid cardholder name"); return false } if (expirydate == "") { alert("Please enter expiry date"); return false } if (!expirydate.match(dateformat)) { alert("Invalid date format"); return false } if (expiry < currentdate) { alert("Exipry date should not be less than today's date"); return false } if (cvv == "") { alert("Please enter CVV"); return false }
 openpopupAddRemove();
 }
 /*****************added21/10/2013**************************/
 function payinstore() {
-var met = document.getElementById('txtcode').value;
-var amount = document.getElementById('txtdate').value;
-if (met == "") {
-alert("Please enter code");
-return false;
-}
-if (amount == "") {
-alert("Please enter date");
-return false;
-}
+var met = document.getElementById('txtcode').value; var amount = document.getElementById('txtdate').value; if (met == "") { alert("Please enter code"); return false } if (amount == "") { alert("Please enter date"); return false }
 openpopupPayStore();
-}
-function getUrlVars() {
-var vars = [], hash;
-var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-for (var i = 0; i < hashes.length; i++) {
-hash = hashes[i].split('=');
-vars.push(hash[0]);
-vars[hash[0]] = hash[1];
-}
-return vars;
 }
 /*******check checklogin *********/
 function checkLogin() {
 if (localStorage.randgosessionid == undefined || localStorage.randgosessionid == null || localStorage.randgosessionid == 'null' || localStorage.randgosessionid == '' || localStorage.randgosessionid == 0) {
 document.getElementById('chkremember').src = "public/images/checkbox.png";
-document.getElementById('txtLoginUserName').value = "";
-document.getElementById('txtLoginPassword').value = "";
+$('#txtLoginUserName,#txtLoginPassword').val('');
 prevPage = currentPage;
 $.mobile.changePage('#log', {
 transition: "none",
@@ -1069,36 +854,13 @@ changeHash: false
 currentPage = 'log';
 pageData.push(currentPage);
 window.localStorage.setItem("randgosessionid", "null");
-localStorage.gettravel = 0;
-localStorage.getlegal = 0;
-localStorage.getroad = 0;
-localStorage.getmedical = 0;
-localStorage.gethome = 0;
 return true;
 } else {
 return true;
 }
-// return true;
 }
 function Transactions() {
-var airvalue = document.getElementById('txtair').value;
-var servicefee = document.getElementById('txtfee').value;
-var total = document.getElementById('txttotal').value;
-airvalue = airvalue.replace('R', '');
-servicefee = servicefee.replace('R', '');
-total = total.replace('R', '');
-if (airvalue == "") {
-alert("Please enter airtime Value");
-return false;
-}
-if (servicefee == "") {
-alert("Please enter serviceFee");
-return false;
-}
-if (total == "") {
-alert("Please enter total");
-return false;
-}
+var airvalue = document.getElementById('txtair').value; var servicefee = document.getElementById('txtfee').value; var total = document.getElementById('txttotal').value; airvalue = airvalue.replace('R', ''); servicefee = servicefee.replace('R', ''); total = total.replace('R', ''); if (airvalue == "") { alert("Please enter airtime Value"); return false } if (servicefee == "") { alert("Please enter serviceFee"); return false } if (total == "") { alert("Please enter total"); return false }
 openpopupTdtls();
 }
 function GetMoreInfo(pageType) {
@@ -1117,7 +879,6 @@ changeHash: false
 });
 currentPage = 'clickformoreinfo';
 pageData.push(currentPage);
-$("a").attr("target", "_blank");
 if (pageType == "Home") {
 document.getElementById('homeheader').innerHTML = 'HOME ASSISTANCE';
 document.getElementById('divhomeassist').style.display = 'block';
@@ -1135,7 +896,7 @@ document.getElementById('homeheader').innerHTML = 'TRAVEL ASSISTANCE';
 document.getElementById('traveldiv').style.display = 'block';
 }
 }
-$("a").attr("target", "_blank");
+$("a").removeAttr('href');
 }
 function isLoggedIn() {
 if (localStorage.wisessionid != null && localStorage.wisessionid != undefined && window.localStorage.getItem("randgosessionid") != undefined || window.localStorage.getItem("randgosessionid") != null) {
@@ -1151,49 +912,10 @@ pageData.push(currentPage);
 }
 /************************************profile*******************************/
 function validation() {
-var pinnew = document.getElementById('txtnewpin').value;
-var pinconfirm = document.getElementById('txtconpin').value;
-if (pinnew == "") {
-alert("Please enter the password!", "Info ");
-return false;
-}
-if (pinnew.length < 5) {
-alert("Password must contain at least five characters!", " Info ");
-return false;
-}
-if (pinconfirm == "") {
-alert("Please enter the confirm password!", " Info ");
-return false;
-}
-if (pinnew != pinconfirm) {
-alert("Passwords typed do not match, please re-enter your passwords!", "Info ");
-return false;
-}
-var confirmpw = confirm("Are you sure you want to change your password!");
-if (confirmpw == true) {
-ProfileChangepassword(pinnew);
-prevPage = currentPage;
-$.mobile.changePage('#indexPage', {
-transition: "none",
-reverse: true,
-changeHash: false
-});
-currentPage = 'indexPage';
-pageData.push(currentPage);
-}
-else {
-prevPage = currentPage;
-$.mobile.changePage('#indexprofile', {
-transition: "none",
-reverse: true,
-changeHash: false
-});
-currentPage = 'indexprofile';
-pageData.push(currentPage);
-}
+ var Name = document.getElementById('txtusername').value; var FName = document.getElementById('txtname').value; var SurName = document.getElementById('txtsname').value; var EmailID = document.getElementById('txtemail').value; var CellNumber = document.getElementById('txtcellno').value; if (CellNumber.charAt(3) == 0) { CellNumberResult = CellNumber.replace(CellNumber.charAt(3), '') } else { CellNumberResult = CellNumber } var IdNumber = document.getElementById('txtid').value; var pinnew = document.getElementById('txtnewpin').value; var pinconfirm = document.getElementById('txtconpin').value; var policyno = document.getElementById('txtRegPolicyNumber').value; var unameexp = /^[A-Za-z ']*$/; var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; var checkbox1 = document.getElementById('chk'); var pattern = /^\d{11}$/; var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; var idexp = /^(\d{13})$/; var num = /^(\(?\+?[0-9]*\)?)*$/g; var pwd = /^\d{5}$/; var checnum = /^\d+$/; if (Name == "") { alert("Please enter the User Name!"); return false } else if (!Name.match(unameexp)) { alert("Please enter valid User Name!"); return false } else if (FName == "") { alert("Please enter the First Name!"); return false } else if (!FName.match(unameexp)) { alert("Please enter valid First Name!"); return false } else if (SurName == "") { alert("Please enter the Surname!"); return false } else if (!SurName.match(unameexp)) { alert("Please enter valid Surname!"); return false } else if (EmailID == "") { alert("Please enter the Email id!"); return false } else if (EmailID.indexOf("@", 0) < 0) { alert("Please enter valid Email id!"); return false } else if (EmailID.indexOf(".", 0) < 0) { alert("Please enter a valid Email id!"); return false } else if (CellNumberResult == "+27") { alert("Please enter a valid Cellphone number!"); return false } else if (!CellNumberResult.match(num)) { alert("Please enter a valid Cellphone number!"); return false } else if (CellNumberResult.length < '12') { alert("Please enter a valid Cellphone number!"); return false } else if (CellNumberResult.length > '12') { alert("Please enter a valid Cellphone number!"); return false } else if (IdNumber == "") { alert("Please enter the Id number!"); return false } else if (!IdNumber.match(idexp)) { alert("Please enter 13 digit Id number!"); return false } else { CellNumberResult = CellNumberResult.slice(1); if (pinnew == '') { document.getElementById('txtnewpin').value = 'gohome'; Profileupdate(document.getElementById('userid').value, FName, SurName, Name, document.getElementById('oldpin').value, IdNumber, EmailID, CellNumberResult) } else { if (pinnew.length < 5) { alert("Password must contain at least five characters!", " Info "); return false } if (pinconfirm == "") { alert("Please enter the confirm password!", " Info "); return false } if (pinnew != pinconfirm) { alert("Passwords typed do not match, please re-enter your passwords!", "Info "); return false } var confirmpw = confirm("Are you sure you want to change your password!", "Info "); if (confirmpw == true) { Profileupdate(document.getElementById('userid').value, FName, SurName, Name, pinnew, IdNumber, EmailID, CellNumberResult) } else { prevPage = currentPage; $.mobile.changePage('#indexprofile', { transition: "none", reverse: false, changeHash: false }); currentPage = 'indexprofile'; pageData.push(currentPage) } } }
 }
 function GetProfileDetails() {
-var profileinputdata='';profileinputdata='<?xml version="1.0" encoding="utf-8"?>';profileinputdata=profileinputdata+'<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">';profileinputdata=profileinputdata+' <soap:Body>';profileinputdata=profileinputdata+'<GetProfileDetails xmlns="http://tempuri.org/">';profileinputdata=profileinputdata+'<username>'+localStorage.username+'</username>';profileinputdata=profileinputdata+'</GetProfileDetails>';profileinputdata=profileinputdata+'</soap:Body>';profileinputdata=profileinputdata+'</soap:Envelope>';CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=GetProfileDetails',profileinputdata,'POST','text/xml',GetProfileDetailsCallBack);
+var profileinputdata = ''; profileinputdata = '<?xml version="1.0" encoding="utf-8"?>'; profileinputdata = profileinputdata + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; profileinputdata = profileinputdata + ' <soap:Body>'; profileinputdata = profileinputdata + '<GetProfileDetails xmlns="http://tempuri.org/">'; profileinputdata = profileinputdata + '<username>' + localStorage.username + '</username>'; profileinputdata = profileinputdata + '</GetProfileDetails>'; profileinputdata = profileinputdata + '</soap:Body>'; profileinputdata = profileinputdata + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=GetProfileDetails', profileinputdata, 'POST', 'text/xml', GetProfileDetailsCallBack);
 }
 function GetProfileDetailsCallBack(responseData) {
 try {
@@ -1208,9 +930,10 @@ document.getElementById('txtusername').value = xmlDoc.getElementsByTagName("User
 document.getElementById('txtname').value = xmlDoc.getElementsByTagName("FirstName")[0].textContent;
 document.getElementById('txtsname').value = xmlDoc.getElementsByTagName("LastName")[0].textContent;
 document.getElementById('txtid').value = xmlDoc.getElementsByTagName("IDNumber")[0].textContent;
-document.getElementById('txtcellno').value = xmlDoc.getElementsByTagName("CellNumber")[0].textContent;
+document.getElementById('txtcellno').value = '+' + xmlDoc.getElementsByTagName("CellNumber")[0].textContent;
 document.getElementById('txtemail').value = xmlDoc.getElementsByTagName("EMAILID")[0].textContent;
 document.getElementById('oldpin').value = xmlDoc.getElementsByTagName("Password")[0].textContent;
+document.getElementById('userid').value = xmlDoc.getElementsByTagName("UserId")[0].textContent;
 }
 else {
 alert('The System is temporarily unavailable, please try again later.');
@@ -1221,36 +944,39 @@ catch (exp) {
 }
 }
 /********************************Change password*****************************/
-function ProfileChangepassword(Newpin) {
-var changepinInputdata = ""; changepinInputdata = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; changepinInputdata = changepinInputdata + '<soap:Body>'; changepinInputdata = changepinInputdata + '<ChangePassword xmlns="http://tempuri.org/">'; changepinInputdata = changepinInputdata + '<username>' + localStorage.username + '</username>'; changepinInputdata = changepinInputdata + '<newpassword>' + Newpin + '</newpassword>'; changepinInputdata = changepinInputdata + '</ChangePassword>'; changepinInputdata = changepinInputdata + '</soap:Body>'; changepinInputdata = changepinInputdata + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=ChangePassword', changepinInputdata, 'POST', 'text/xml', ProfileChangepasswordCallback);
+function Profileupdate(Userid, Fname, Sname, Uname, Password, IDNum, EmailID, celnum) {
+var changepinInputdata = ""; changepinInputdata = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; changepinInputdata = changepinInputdata + '<soap:Body>'; changepinInputdata = changepinInputdata + '<UpdateUserdetails xmlns="http://tempuri.org/">'; changepinInputdata = changepinInputdata + '<UserId>' + Userid + '</UserId>'; changepinInputdata = changepinInputdata + '<FirstName>' + Fname + '</FirstName>'; changepinInputdata = changepinInputdata + '<LastName>' + Sname + '</LastName>'; changepinInputdata = changepinInputdata + '<UserName>' + Uname + '</UserName>'; changepinInputdata = changepinInputdata + '<Password>' + Password + '</Password>'; changepinInputdata = changepinInputdata + '<IDNumber>' + IDNum + '</IDNumber>'; changepinInputdata = changepinInputdata + '<EMAILID>' + EmailID + '</EMAILID>'; changepinInputdata = changepinInputdata + '<CellNumber>' + celnum + '</CellNumber>'; changepinInputdata = changepinInputdata + '</UpdateUserdetails>'; changepinInputdata = changepinInputdata + '</soap:Body>'; changepinInputdata = changepinInputdata + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=UpdateUserdetails', changepinInputdata, 'POST', 'text/xml', ProfileupdateCallback);
 }
-function ProfileChangepasswordCallback(responseData) {
-// alert("ProfileChangepasswordCallback:::::::::::" + responseData);
+function ProfileupdateCallback(responseData) {
 try {
 responseData = responseData.replace(/&gt;/gi, '>');
 responseData = responseData.replace(/&lt;/gi, '<');
 var parser = new DOMParser();
 if (responseData !== "") {
 var xmlDoc = parser.parseFromString(responseData, "text/xml");
-if (xmlDoc.getElementsByTagName("ChangePasswordResult")[0].textContent == 0) {
+if (xmlDoc.getElementsByTagName("UpdateUserdetailsResult")[0].textContent == 0) {
 alert("Your password has not changed.");
 return false;
 }
 else {
+if (document.getElementById('txtnewpin').value == 'gohome') {
+alert("Profile updated successfully!");
+document.getElementById('txtnewpin').value = '';
+gotoService();
+return false;
+} else {
 alert("Your password changed successfully!");
-window.localStorage.setItem("loginID", null);
-window.localStorage.setItem("randgosessionid", "null");
-document.getElementById('txtLoginUserName').value = "";
-document.getElementById('txtLoginPassword').value = "";
+localStorage.randgosessionid = null;
 localStorage.loginID = null;
 prevPage = currentPage;
 $.mobile.changePage('#indexPage', {
 transition: "none",
-reverse: true,
+reverse: false,
 changeHash: false
 });
 currentPage = 'indexPage';
 pageData.push(currentPage);
+}
 }
 }
 }
@@ -1259,6 +985,9 @@ catch (exp) {
 }
 /*******************************Accept Terms and Conditions**********/
 function gototerms() {
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
+var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table> ';
+$(".header28").append(clonedDiv);
 prevPage = currentPage;
 $.mobile.changePage('#terms', {
 transition: "none",
@@ -1270,6 +999,7 @@ pageData.push(currentPage);
 }
 /* ****** ASHA DEC 3/12/2013 ******* */
 function EALoginValidation() {
+try {
 var curimgsrc = document.getElementById('chkremember').src;
 if (document.getElementById('txtLoginUserName').value == "") {
 alert("Please enter the Username!");
@@ -1281,24 +1011,20 @@ return false;
 }
 try {
 if (curimgsrc.indexOf('checkbox.png') == 23) {
-//localStorage.loginID = 0;
 window.localStorage.setItem("loginID", 0);
 } else {
-//localStorage.loginID = 1;
 window.localStorage.setItem("loginID", 1);
 }
+} catch (exp) {
+    
+//alert('checkr' + exp);
 }
-catch (exp) {
-}
-$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
-$("#FAQtbl tr").remove();
-$("#tblquestionans tr").remove();
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
 $('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
-//salert(window.localStorage.getItem("loginID"));
 MYLogintoAllServices(document.getElementById('txtLoginUserName').value, document.getElementById('txtLoginPassword').value);
+} catch (ex) {
+}
 }
 function MYLogintoAllServices(username, password) {
 var eaLoginInputData = ""; eaLoginInputData = '<?xml version="1.0" encoding="utf-8"?>'; eaLoginInputData = eaLoginInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; eaLoginInputData = eaLoginInputData + '<soap:Body>'; eaLoginInputData = eaLoginInputData + '<MobileUserLogin xmlns="http://tempuri.org/">'; eaLoginInputData = eaLoginInputData + '<Username>' + username + '</Username>'; eaLoginInputData = eaLoginInputData + '<Password>' + password + '</Password>'; eaLoginInputData = eaLoginInputData + '</MobileUserLogin>'; eaLoginInputData = eaLoginInputData + '</soap:Body>'; eaLoginInputData = eaLoginInputData + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=MobileUserLogin', eaLoginInputData, 'POST', 'text/xml', MYLogintoAllServicesCallBack);
@@ -1323,61 +1049,31 @@ localStorage.EmailID = xmlDoc.getElementsByTagName("EMAILID")[0].childNodes[0] =
 localStorage.CellNumber = xmlDoc.getElementsByTagName("CellNumber")[0].childNodes[0] == undefined || xmlDoc.getElementsByTagName("CellNumber")[0].childNodes[0] == 'null' ? '' : xmlDoc.getElementsByTagName("CellNumber")[0].childNodes[0].nodeValue;
 var nodval = xmlDoc.getElementsByTagName("SchemaUrlTable");
 var desc1 = '';
-for (i = 0; i < nodval.length; i++) {
+for (var i = 0; i < nodval.length; i++) {
 if (i == 0) {
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
-document.getElementById('divhomeassist').innerHTML = desc1;
-localStorage.imgUrlHome = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
+document.getElementById('divhomeassist').innerHTML = desc1; // live link
+localStorage.imgUrlHome = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 1) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('divmediassist').innerHTML = desc1;
-localStorage.imgUrlMedical = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlMedical = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 2) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('divroadassist').innerHTML = desc1;
-localStorage.imgUrlRoad = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlRoad = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 3) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('legaldiv').innerHTML = desc1;
-localStorage.imgUrlLegal = 'http://118.139.160.226:8059/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlLegal = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 4) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('traveldiv').innerHTML = desc1;
-localStorage.imgUrlTravel = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlTravel = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 }
 }
 if (xmlDoc.getElementsByTagName("HomeAssistance")[0].childNodes[0].nodeValue == 'null' || xmlDoc.getElementsByTagName("HomeAssistance")[0].childNodes[0].nodeValue == null) {
@@ -1389,8 +1085,8 @@ HomeID = xmlDoc.getElementsByTagName("HomeAssistance")[0].childNodes[0].nodeValu
 var productid = xmlDoc.getElementsByTagName("HomeAssistance")[0].childNodes[0].nodeValue;
 var productname = " Home Assistance ";
 $("#hme,#assisth").show();
-//document.getElementById('hme').style.backgroundImage = 'url(' + localStorage.imgUrlHome + ')';
 document.getElementById("hmimg").src = localStorage.imgUrlHome;
+document.getElementById("hmimg1").src = localStorage.imgUrlHome;
 $("#hmimg").show();
 $("#homeseperator").removeClass("middlecontent3");
 document.getElementById('divhm').className = "panelcollapsed";
@@ -1406,8 +1102,8 @@ var productid = xmlDoc.getElementsByTagName("MedicalAssistance")[0].childNodes[0
 var productname = " Medical Assistance ";
 $("#medical,#medtb").show();
 $("#mdimg").show();
-//document.getElementById('medical').style.backgroundImage = 'url(' + localStorage.imgUrlMedical + ')';
 document.getElementById("mdimg").src = localStorage.imgUrlMedical;
+document.getElementById("mdimg1").src = localStorage.imgUrlMedical;
 $("#homeseperator").removeClass("middlecontent3");
 document.getElementById('divmm').className = "panelcollapsed";
 $("#divmm").show();
@@ -1422,8 +1118,8 @@ var productid = xmlDoc.getElementsByTagName("RoadAssistance")[0].childNodes[0].n
 var productname = " Roadside Assistance ";
 $("#roadas,#rdtb").show();
 $("#rdimg").show();
-//document.getElementById('roadas').style.backgroundImage = 'url(' + localStorage.imgUrlRoad + ')';
 document.getElementById("rdimg").src = localStorage.imgUrlRoad;
+document.getElementById("rdimg1").src = localStorage.imgUrlRoad;
 $("#homeseperator").removeClass("middlecontent3");
 document.getElementById('divrd').className = "panelcollapsed";
 $("#divrd").show();
@@ -1438,8 +1134,8 @@ var productid = xmlDoc.getElementsByTagName("LegalAssistance")[0].childNodes[0].
 var productname = " Legal Assistance";
 $("#legalas,#letb").show();
 $("#lgimg").show();
-//document.getElementById('legalas').style.backgroundImage = 'url(' + localStorage.imgUrlLegal + ')';
 document.getElementById("lgimg").src = localStorage.imgUrlLegal;
+document.getElementById("lgimg1").src = localStorage.imgUrlLegal;
 $("#homeseperator").removeClass("middlecontent3");
 document.getElementById('divle').className = "panelcollapsed";
 $("#divle").show();
@@ -1453,15 +1149,21 @@ localStorage.gettravel = 5;
 var productid = xmlDoc.getElementsByTagName("travelAssistance")[0].childNodes[0].nodeValue;
 var productname = "Travel Assistance";
 $("#travelas,#trtb").show();
-//document.getElementById('travelas').style.backgroundImage = 'url(' + localStorage.imgUrlTravel + ')';
 document.getElementById("tlimg").src = localStorage.imgUrlTravel;
+document.getElementById("tlimg1").src = localStorage.imgUrlTravel;
 $("#homeseperator").removeClass("middlecontent3");
 document.getElementById('divtr').className = "panelcollapsed";
 $("#divtr").show();
 $("#tlimg").show();
 } $(".trheight5").show();
-// LOGIN TO RANDGO SERVICES
-var randgoInputData = ''; randgoInputData = '<?xml version="1.0" encoding="utf-8"?>'; randgoInputData = randgoInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; randgoInputData = randgoInputData + '<soap:Body>'; randgoInputData = randgoInputData + '<Login xmlns="http://tempuri.org/">'; randgoInputData = randgoInputData + '<lUserName>ws@europassistance</lUserName>'; randgoInputData = randgoInputData + '<lPassword>e@s@ws</lPassword>'; randgoInputData = randgoInputData + '</Login>'; randgoInputData = randgoInputData + '</soap:Body>'; randgoInputData = randgoInputData + '</soap:Envelope>'; CallWebService('http://www.randgo.com/3rdpartyservices/Service.asmx', randgoInputData, 'POST', 'text/xml', RandoLoginCallBackNew);
+prevPage = currentPage;
+$.mobile.changePage('#indexservice', {
+    transition: "none",
+    reverse: true,
+    changeHash: false
+});
+currentPage = 'indexservice';
+pageData.push(currentPage);
 } //if
 else {
 if (xmlDoc.getElementsByTagName("MESSAGE")[0].childNodes[0].nodeValue == 'NO MOBILEUSERGUID') {
@@ -1480,26 +1182,6 @@ localStorage.firstname = xmlDoc.getElementsByTagName("FirstName")[0].childNodes[
 localStorage.SurName = xmlDoc.getElementsByTagName("LastName")[0].childNodes[0] == undefined || xmlDoc.getElementsByTagName("LastName")[0].childNodes[0] == 'null' ? '' : xmlDoc.getElementsByTagName("LastName")[0].childNodes[0].nodeValue;
 localStorage.EmailID = xmlDoc.getElementsByTagName("EMAILID")[0].childNodes[0] == undefined || xmlDoc.getElementsByTagName("EMAILID")[0].childNodes[0] == 'null' ? '' : xmlDoc.getElementsByTagName("EMAILID")[0].childNodes[0].nodeValue;
 localStorage.CellNumber = xmlDoc.getElementsByTagName("CellNumber")[0].childNodes[0] == undefined || xmlDoc.getElementsByTagName("CellNumber")[0].childNodes[0] == 'null' ? '' : xmlDoc.getElementsByTagName("CellNumber")[0].childNodes[0].nodeValue;
-var randgoInputData = ''; randgoInputData = '<?xml version="1.0" encoding="utf-8"?>'; randgoInputData = randgoInputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; randgoInputData = randgoInputData + '<soap:Body>'; randgoInputData = randgoInputData + '<Login xmlns="http://tempuri.org/">'; randgoInputData = randgoInputData + '<lUserName>ws@europassistance</lUserName>'; randgoInputData = randgoInputData + '<lPassword>e@s@ws</lPassword>'; randgoInputData = randgoInputData + '</Login>'; randgoInputData = randgoInputData + '</soap:Body>'; randgoInputData = randgoInputData + '</soap:Envelope>'; CallWebService('http://www.randgo.com/3rdpartyservices/Service.asmx', randgoInputData, 'POST', 'text/xml', RandoLoginCallBackNew);
-} else {
-alert(xmlDoc.getElementsByTagName("MESSAGE")[0].childNodes[0].nodeValue, 'Info');
-return false;
-}
-}
-}
-}
-catch (exp) {
-}
-}
-function RandoLoginCallBackNew(responseData) {
-try {
-responseData = responseData.replace(/&gt;/gi, '>');
-responseData = responseData.replace(/&lt;/gi, '<');
-var parser = new DOMParser();
-if (responseData !== "") {
-var xmlDoc = parser.parseFromString(responseData, "text/xml");
-if (xmlDoc.getElementsByTagName("status")[0] != null && xmlDoc.getElementsByTagName("status")[0].textContent !== "") {
-window.localStorage.setItem("randgosessionid", xmlDoc.getElementsByTagName("sessionid")[0].textContent);
 prevPage = currentPage;
 $.mobile.changePage('#indexservice', {
 transition: "none",
@@ -1508,39 +1190,31 @@ changeHash: false
 });
 currentPage = 'indexservice';
 pageData.push(currentPage);
-if ((localStorage.gettravel == 0 && localStorage.getlegal == 0 && localStorage.getroad == 0 && localStorage.getmedical == 0 && localStorage.gethome == 0) || (localStorage.gettravel == null && localStorage.getlegal == null && localStorage.getroad == null && localStorage.getmedical == null && localStorage.gethome == null)) {
-$("#divhm,#divmm,#divrd,#divle,#divtr").hide();
-$(".trheight5").hide();
-$("#hme,#medical,#roadas,#legalas,#travelas").hide(); //color img
 $("#NOproductDiv").show();
-}
-}
-}
-else {
-alert('No Data Found');
+} else {
+alert(xmlDoc.getElementsByTagName("MESSAGE")[0].childNodes[0].nodeValue);
 return false;
 }
-} catch (exp) {
-alert('RandoLoginCallBackNew' + exp);
+}
+}
+}
+catch (exp) {
 }
 }
 /***********DEC9th ************/
 function gotoService() {
+document.getElementById("hmimg").src = ""; document.getElementById("hmimg1").src = ""; document.getElementById("mdimg").src = ""; document.getElementById("mdimg1").src = ""; document.getElementById("rdimg").src = ""; document.getElementById("rdimg1").src = ""; document.getElementById("lgimg").src = ""; document.getElementById("lgimg1").src = ""; document.getElementById("tlimg").src = ""; document.getElementById("tlimg1").src = "";
 prevPage = currentPage;
 $.mobile.changePage('#indexservice', {
-    transition: "none",
-    reverse: true,
-    changeHash: false
+transition: "none",
+reverse: true,
+changeHash: false
 });
 currentPage = 'indexservice';
 pageData.push(currentPage);
 $('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
-$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
-$("#tbldisplaycategories tr").remove();
-$("#tbldisplaycategoriesbycid tr").remove();
-$("#tbldisplaymerchantdeals tr").remove();
-$("#FAQtbl tr").remove();
-$("#tblquestionans tr").remove();
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
+$("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();-
 $("#divhm,#divmm,#divrd,#divle,#divtr").hide();
 $("#hme,#medical,#roadas,#legalas,#travelas").hide(); //color img
 $(".trheight5").hide();
@@ -1564,59 +1238,29 @@ var nodval = xmlDoc.getElementsByTagName("SchemaUrlTable");
 var desc1 = '';
 for (i = 0; i < nodval.length; i++) {
 if (i == 0) {
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('divhomeassist').innerHTML = desc1;
-localStorage.imgUrlHome = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlHome = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 1) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('divmediassist').innerHTML = desc1;
-localStorage.imgUrlMedical = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlMedical = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 2) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('divroadassist').innerHTML = desc1;
-localStorage.imgUrlRoad = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlRoad = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 3) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('legaldiv').innerHTML = desc1;
-localStorage.imgUrlLegal = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlLegal = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 } else if (i == 4) {
 desc1 = '';
-desc1 = xmlDoc.getElementsByTagName("Description")[i].textContent;
-desc1 = desc1.replace(/&lt;/g, '<');
-desc1 = desc1.replace(/&gt;/g, '>');
-desc1 = desc1.replace(/&quot;/g, '"');
-desc1 = desc1.replace(/&nbsp;/g, ' ');
-desc1 = desc1.replace(/&amp;/g, '&');
-desc1 = desc1.replace(/&#39;/g, "'");
+desc1 = replacespecilChar(xmlDoc.getElementsByTagName("Description")[i].textContent);
 document.getElementById('traveldiv').innerHTML = desc1;
-localStorage.imgUrlTravel = 'http://118.139.160.226/EASACMS2/uploadImages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
+localStorage.imgUrlTravel = 'http://118.139.160.226/EASACMS2/Uploadimages/' + xmlDoc.getElementsByTagName("Filename")[i].textContent;
 }
 }
 if (xmlDoc.getElementsByTagName("HomeAssistance")[0].childNodes[0].nodeValue == 'null' || xmlDoc.getElementsByTagName("HomeAssistance")[0].childNodes[0].nodeValue == null) {
@@ -1698,9 +1342,7 @@ if (localStorage.gethome == 0 && localStorage.getmedical == 0 && localStorage.ge
 $("#NOproductDiv").show();
 }
 try {
-
 } catch (ex) {
-
 alert('The System is temporarily unavailable, please try again later.');
 //   alert(ex + '::: gose');
 }
@@ -1714,7 +1356,6 @@ localStorage.getmedical = 0;
 localStorage.gethome = 0;
 $("#NOproductDiv").show();
 try {
-
 } catch (ex) {
 }
 } else {
@@ -1727,27 +1368,14 @@ catch (exp) {
 //alert('gotoSe');
 }
 }
+
 /*****************************************************************************************************
 * PURPOSE :CreatePleaseCallMeRequestNew(Services indexervice.html)
 * AUTHOR : Asha
 * CREATED DATE : 03 DEC 2013
 ******************************************************************************************************/
 function CreatePleaseCallMeRequestNew(type) {
-var productiID = '';
-if (type == 'home') {
-productiID = HomeID;
-} else if (type == 'medical') {
-productiID = MedicalID;
-} else if (type == 'road') {
-productiID = RoadID;
-} else if (type == 'legal') {
-productiID = legalID;
-} else if (type == 'travel') {
-productiID = TravelID;
-} else {
-productiID = '735c8b67-37c4-4f72-af94-105a26e22d2c';
-}
-var europInputData = ""; europInputData = '<?xml version="1.0" encoding="utf-8"?>'; europInputData = europInputData + '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="https://api.europassistance.co.za/">'; europInputData = europInputData + '<soapenv:Header/>'; europInputData = europInputData + '<soapenv:Body>'; europInputData = europInputData + '<api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '<api:mobileUserGuid>' + localStorage.guid + '</api:mobileUserGuid>'; europInputData = europInputData + '<api:validateOnly>false</api:validateOnly>'; europInputData = europInputData + '<api:testOnly>true</api:testOnly>'; europInputData = europInputData + '<api:mobileProductGuid>' + productiID + '</api:mobileProductGuid>'; europInputData = europInputData + '<api:latitude>0</api:latitude>'; europInputData = europInputData + '<api:longitude>0</api:longitude>'; europInputData = europInputData + '</api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '</soapenv:Body>'; europInputData = europInputData + '</soapenv:Envelope>'; CallWebService('https://api.europassistance.co.za/services/MobileServices.asmx', europInputData, 'POST', 'text/xml', CreatePleaseCallMeRequestCallbackNew);
+var productiID = ''; if (type == 'home' && localStorage.count == 0) { productiID = ''; productiID = HomeID; localStorage.count = 1; var europInputData = ""; europInputData = '<?xml version="1.0" encoding="utf-8"?>'; europInputData = europInputData + '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="https://api.europassistance.co.za/">'; europInputData = europInputData + '<soapenv:Header/>'; europInputData = europInputData + '<soapenv:Body>'; europInputData = europInputData + '<api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '<api:mobileUserGuid>' + localStorage.guid + '</api:mobileUserGuid>'; europInputData = europInputData + '<api:validateOnly>false</api:validateOnly>'; europInputData = europInputData + '<api:testOnly>true</api:testOnly>'; europInputData = europInputData + '<api:mobileProductGuid>' + productiID + '</api:mobileProductGuid>'; europInputData = europInputData + '<api:latitude>0</api:latitude>'; europInputData = europInputData + '<api:longitude>0</api:longitude>'; europInputData = europInputData + '</api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '</soapenv:Body>'; europInputData = europInputData + '</soapenv:Envelope>'; CallWebService('https://api.europassistance.co.za/services/MobileServices.asmx', europInputData, 'POST', 'text/xml', CreatePleaseCallMeRequestCallbackNew) } else if (type == 'Medical' && localStorage.count == 0) { productiID = ''; productiID = MedicalID; localStorage.count = 1; var europInputData = ""; europInputData = '<?xml version="1.0" encoding="utf-8"?>'; europInputData = europInputData + '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="https://api.europassistance.co.za/">'; europInputData = europInputData + '<soapenv:Header/>'; europInputData = europInputData + '<soapenv:Body>'; europInputData = europInputData + '<api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '<api:mobileUserGuid>' + localStorage.guid + '</api:mobileUserGuid>'; europInputData = europInputData + '<api:validateOnly>false</api:validateOnly>'; europInputData = europInputData + '<api:testOnly>true</api:testOnly>'; europInputData = europInputData + '<api:mobileProductGuid>' + productiID + '</api:mobileProductGuid>'; europInputData = europInputData + '<api:latitude>0</api:latitude>'; europInputData = europInputData + '<api:longitude>0</api:longitude>'; europInputData = europInputData + '</api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '</soapenv:Body>'; europInputData = europInputData + '</soapenv:Envelope>'; CallWebService('https://api.europassistance.co.za/services/MobileServices.asmx', europInputData, 'POST', 'text/xml', CreatePleaseCallMeRequestCallbackNew) } else if (type == 'road' && localStorage.count == 0) { productiID = ''; productiID = RoadID; localStorage.count = 1; var europInputData = ""; europInputData = '<?xml version="1.0" encoding="utf-8"?>'; europInputData = europInputData + '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="https://api.europassistance.co.za/">'; europInputData = europInputData + '<soapenv:Header/>'; europInputData = europInputData + '<soapenv:Body>'; europInputData = europInputData + '<api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '<api:mobileUserGuid>' + localStorage.guid + '</api:mobileUserGuid>'; europInputData = europInputData + '<api:validateOnly>false</api:validateOnly>'; europInputData = europInputData + '<api:testOnly>true</api:testOnly>'; europInputData = europInputData + '<api:mobileProductGuid>' + productiID + '</api:mobileProductGuid>'; europInputData = europInputData + '<api:latitude>0</api:latitude>'; europInputData = europInputData + '<api:longitude>0</api:longitude>'; europInputData = europInputData + '</api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '</soapenv:Body>'; europInputData = europInputData + '</soapenv:Envelope>'; CallWebService('https://api.europassistance.co.za/services/MobileServices.asmx', europInputData, 'POST', 'text/xml', CreatePleaseCallMeRequestCallbackNew) } else if (type == 'legal' && localStorage.count == 0) { productiID = ''; productiID = legalID; localStorage.count = 1; var europInputData = ""; europInputData = '<?xml version="1.0" encoding="utf-8"?>'; europInputData = europInputData + '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="https://api.europassistance.co.za/">'; europInputData = europInputData + '<soapenv:Header/>'; europInputData = europInputData + '<soapenv:Body>'; europInputData = europInputData + '<api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '<api:mobileUserGuid>' + localStorage.guid + '</api:mobileUserGuid>'; europInputData = europInputData + '<api:validateOnly>false</api:validateOnly>'; europInputData = europInputData + '<api:testOnly>true</api:testOnly>'; europInputData = europInputData + '<api:mobileProductGuid>' + productiID + '</api:mobileProductGuid>'; europInputData = europInputData + '<api:latitude>0</api:latitude>'; europInputData = europInputData + '<api:longitude>0</api:longitude>'; europInputData = europInputData + '</api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '</soapenv:Body>'; europInputData = europInputData + '</soapenv:Envelope>'; CallWebService('https://api.europassistance.co.za/services/MobileServices.asmx', europInputData, 'POST', 'text/xml', CreatePleaseCallMeRequestCallbackNew) } else if (type == 'travel' && localStorage.count == 0) { productiID = ''; productiID = TravelID; localStorage.count = 1; var europInputData = ""; europInputData = '<?xml version="1.0" encoding="utf-8"?>'; europInputData = europInputData + '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="https://api.europassistance.co.za/">'; europInputData = europInputData + '<soapenv:Header/>'; europInputData = europInputData + '<soapenv:Body>'; europInputData = europInputData + '<api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '<api:mobileUserGuid>' + localStorage.guid + '</api:mobileUserGuid>'; europInputData = europInputData + '<api:validateOnly>false</api:validateOnly>'; europInputData = europInputData + '<api:testOnly>true</api:testOnly>'; europInputData = europInputData + '<api:mobileProductGuid>' + productiID + '</api:mobileProductGuid>'; europInputData = europInputData + '<api:latitude>0</api:latitude>'; europInputData = europInputData + '<api:longitude>0</api:longitude>'; europInputData = europInputData + '</api:CreatePleaseCallMeRequest>'; europInputData = europInputData + '</soapenv:Body>'; europInputData = europInputData + '</soapenv:Envelope>'; CallWebService('https://api.europassistance.co.za/services/MobileServices.asmx', europInputData, 'POST', 'text/xml', CreatePleaseCallMeRequestCallbackNew) } else { productiID = '735c8b67-37c4-4f72-af94-105a26e22d2c' }
 }
 function CreatePleaseCallMeRequestCallbackNew(responseData) {
 responseData = responseData.replace(/&gt;/gi, '>');
@@ -1782,92 +1410,19 @@ pageData.push(currentPage);
 function UserRegistration() {
 try {
 prevPage = currentPage;
-var Name = document.getElementById('txtRegName').value;
-var SurName = document.getElementById('txtRegSurName').value;
-var EmailID = document.getElementById('txtRegEmail').value;
-var CellNumber = document.getElementById('txtRegCell').value;
-var IdNumber = document.getElementById('txtRegIDNo').value;
-var policyno = document.getElementById('txtRegPolicyNumber').value;
-var unameexp = /^[A-Za-z ']*$/;
-var curimgsource = document.getElementById('chkAcceptTerms').src;
-var idexp = /^(\d{13})$/;
-//var pwd = ^[0-9]{5}$
-var pwd = /^\d{5}$/;
-var num = /^(\(?\+?[0-9]*\)?)*$/g;
-if (Name == "") {
-alert("Please enter the First Name!");
-return false;
-}
-else if (!Name.match(unameexp)) {
-alert("Please enter valid First Name!");
-return false;
-}
-else if (SurName == "") {
-alert("Please enter the Surname!");
-return false;
-}
-else if (!SurName.match(unameexp)) {
-alert("Please enter valid Surname!");
-return false;
-}
-else if (EmailID == "") {
-alert("Please enter the Email id!");
-return false;
-}
-else if (EmailID.indexOf("@", 0) < 0) {
-alert("Please enter valid Email id!");
-return false;
-}
-else if (EmailID.indexOf(".", 0) < 0) {
-alert("Please enter a valid Email id!");
-return false;
-}
-else if (CellNumber == "+27") {
-alert("Please enter the Cellphone number!");
-return false;
-} else if (!CellNumber.match(num)) {
-alert("Please enter valid Cellphone number!");
-return false;
-}
-else if (CellNumber.length < '14') {
-alert("Please enter 11 digit Cell number!");
-}
-else if (CellNumber.length > '14') {
-alert("Please enter 11 digit Cell number!");
-}
-else if (IdNumber == "") {
-alert("Please enter the Id number!");
-return false;
-}
-else if (!IdNumber.match(idexp)) {
-alert("Please enter 13 digit Id number!");
-return false;
-}
-else if (policyno == "") {
-alert("Please enter the Policy number!");
-return false;
-}
-else if (policyno.length < 8) {
-alert("Policy number must contain at least 8 numbers!");
-}
-else if (curimgsource.indexOf('checkbox.png') == 23) {
-alert("Please Accept Terms and Conditions!");
-// return false;
-}
+var Name = document.getElementById('txtRegName').value; var SurName = document.getElementById('txtRegSurName').value; var EmailID = document.getElementById('txtRegEmail').value; var CellNumber = document.getElementById('txtRegCell').value; if (CellNumber.charAt(3) == 0) { CellNumberResult = CellNumber.replace(CellNumber.charAt(3), '') } else { CellNumberResult = CellNumber } var IdNumber = document.getElementById('txtRegIDNo').value; var policyno = document.getElementById('txtRegPolicyNumber').value; var unameexp = /^[A-Za-z ']*$/; var curimgsource = document.getElementById('chkAcceptTerms').src; var idexp = /^(\d{13})$/; var pwd = /^\d{5}$/; var num = /^(\(?\+?[0-9]*\)?)*$/g;
+if (Name == "") { alert("Please enter the First Name!"); return false } else if (!Name.match(unameexp)) { alert("Please enter valid First Name!"); return false } else if (SurName == "") { alert("Please enter the Surname!"); return false } else if (!SurName.match(unameexp)) { alert("Please enter valid Surname!"); return false } else if (EmailID == "") { alert("Please enter the Email id!"); return false } else if (EmailID.indexOf("@", 0) < 0) { alert("Please enter valid Email id!"); return false } else if (EmailID.indexOf(".", 0) < 0) { alert("Please enter a valid Email id!"); return false } else if (CellNumberResult == "+27") { alert("Please enter a valid Cellphone number!"); return false; } else if (!CellNumberResult.match(num)) { alert("Please enter a valid Cellphone number!"); return false; } else if (CellNumberResult.length < '12') { alert("Please enter a valid Cellphone number!"); return false; } else if (CellNumberResult.length > '12') { alert("Please enter a valid Cellphone number!"); return false; } else if (IdNumber == "") { alert("Please enter the Id number!"); return false } else if (!IdNumber.match(idexp)) { alert("Please enter 13 digit Id number!"); return false } else if (policyno == "") { alert("Please enter the Policy number!"); return false } else if (policyno.length < 8) { alert("Policy number must contain at least 8 numbers!") } else if (curimgsource.indexOf('checkbox.png') == 23) { alert("Please Accept Terms and Conditions!") }
 else {
-CellNumber = CellNumber.slice(3);
+CellNumberResult = CellNumberResult.slice(1);
 RegisterUserNew(Name, SurName, userName, CellNumber, passowrd, IdNumber, EmailID, policyno);
-}
-} catch (ex) { 
-}
-}
+}} catch (ex) {}}
 function RegisterUserNew(Name, SurName, userName, CellNumber, passowrd, IdNumber, EmailID, policyno) {
 try {
 var registeruserdata = ""; registeruserdata = '<?xml version="1.0" encoding="utf-8"?>'; registeruserdata = registeruserdata + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; registeruserdata = registeruserdata + '<soap:Body>'; registeruserdata = registeruserdata + '<MobileUserRegister xmlns="http://tempuri.org/">'; registeruserdata = registeruserdata + '<Name>' + Name + '</Name>'; registeruserdata = registeruserdata + '<Surname>' + SurName + '</Surname>'; registeruserdata = registeruserdata + '<username>' + userName + '</username>'; registeruserdata = registeruserdata + '<CellNumber>' + CellNumber + '</CellNumber>'; registeruserdata = registeruserdata + '<Password>' + passowrd + '</Password>'; registeruserdata = registeruserdata + '<IdNumber>' + IdNumber + '</IdNumber>'; registeruserdata = registeruserdata + '<EmailID>' + EmailID + '</EmailID>'; registeruserdata = registeruserdata + '<policyno>' + policyno + '</policyno>'; registeruserdata = registeruserdata + '</MobileUserRegister>'; registeruserdata = registeruserdata + '</soap:Body>'; registeruserdata = registeruserdata + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=MobileUserRegister', registeruserdata, 'POST', 'text/xml', RegisterUserCallback);
-} catch (exp) {
+} catch (exp) { }
 }
-}
-$("#txtRegCell,#txtfpcellno").keypress(function (ev) {
+/*function added +27for celnuber*/
+$("#txtRegCell,#txtfpcellno,#txtcellno").keypress(function (ev) {
 var value = "+27";
 var tval = this.value;
 var c = ev.charCode || ev.keyCode;
@@ -1879,19 +1434,16 @@ this.value = value + tval.substring(value.length);
 });
 function RegisterUserCallback(responseData) {
 try {
-// alert(responseData);
 responseData = responseData.replace(/&gt;/gi, '>');
 responseData = responseData.replace(/&lt;/gi, '<');
 var parser = new DOMParser();
 if (responseData !== "") {
 var xmlDoc = parser.parseFromString(responseData, "text/xml");
 if (xmlDoc.getElementsByTagName("MobileUserRegisterResult")[0] != null && xmlDoc.getElementsByTagName("MobileUserRegisterResult")[0] != "" && xmlDoc.getElementsByTagName("MobileUserRegisterResult")[0] != undefined) {
-if (xmlDoc.getElementsByTagName("MobileUserRegisterResult")[0].textContent == 0) {
-alert("User already registered.");
+if (xmlDoc.getElementsByTagName("ErrorCode")[0].childNodes[0].nodeValue == '-1') {
+alert(xmlDoc.getElementsByTagName("ErrorMessage")[0].childNodes[0].nodeValue);
 return false;
-} else {
-var usernameparse = xmlDoc.getElementsByTagName("MobileUserRegisterResult")[0].textContent;
-// alert(usernameparse);
+} else if (xmlDoc.getElementsByTagName("ErrorCode")[0].childNodes[0].nodeValue == '0' || xmlDoc.getElementsByTagName("ErrorCode")[0].childNodes[0].nodeValue == 0) {
 prevPage = currentPage;
 $.mobile.changePage('#indexPage', {
 transition: "none",
@@ -1901,16 +1453,23 @@ changeHash: false
 currentPage = 'indexPage';
 pageData.push(currentPage);
 alert('Registration successfull, Thank you for registering.');
+return false;
+} else {
+alert(xmlDoc.getElementsByTagName("ErrorMessage")[0].childNodes[0].nodeValue);
+prevPage = currentPage;
+$.mobile.changePage('#indexPage', {
+transition: "none",
+reverse: true,
+changeHash: false
+});
+currentPage = 'indexPage';
+pageData.push(currentPage);
+alert('Register is successful. You can login to the application, but you have no access to Europe Assist services');
 }
 } else {
 alert("Register Failed.");
 return false;
-}
-}
-} catch (exp) {
-// alert(exp);
-}
-}
+}}} catch (exp) {}}
 function oncheck() {
 var curimgsrc = document.getElementById('chkAcceptTerms').src;
 if (curimgsrc.indexOf('checkbox.png') == 23) {
@@ -1922,68 +1481,20 @@ document.getElementById('chkAcceptTerms').src = "public/images/checkbox.png";
 /*********logcheck*********************/
 function logcheck() {
 var curimgsrc = document.getElementById('chkremember').src;
-//alert(curimgsrc.indexOf('checkbox.png'));
 if (curimgsrc.indexOf('checkbox.png') == 23) {
 document.getElementById('chkremember').src = "public/images/EAslicing/acceptedbutton.png";
 } else {
 document.getElementById('chkremember').src = "public/images/checkbox.png";
 }
 }
-function gotoRegFirstPage() {
-var regfirstuname = document.getElementById('txtusernameregfirst').value;
-var regfirstpw = document.getElementById('txtpwregfirst').value;
-var regfirstconfirmpw = document.getElementById('txtconfirmpwregfirst').value;
-prevPage = currentPage;
-$.mobile.changePage('#RegFstPage', {
-transition: "none",
-reverse: true,
-changeHash: false
-});
-currentPage = 'RegFstPage';
-pageData.push(currentPage);
-}
-//txtusernameregfirst
 /*******Second time click clear all fields in page & navigate ****/
 function gotoRegister() {
 try {
-var regfirstuname = document.getElementById('txtusernameregfirst').value;
-var regfirstpw = document.getElementById('txtpwregfirst').value;
-var regfirstconfirmpw = document.getElementById('txtconfirmpwregfirst').value;
-var unameexp = /^[A-Za-z ']*$/;
-if (regfirstuname == "") {
-alert("Please enter the Username!");
-return false;
-}
-else if (!regfirstuname.match(unameexp)) {
-alert("Please enter valid Username!");
-return false;
-}
-if (regfirstpw == "") {
-alert("Please enter the Password!");
-return false;
-}
-if (regfirstpw.length < 5) {
-// alert("hello" + Password);
-alert("Password must contain at least five characters!");
-return false;
-}
-if (regfirstconfirmpw == "") {
-alert("Please enter Confirm Password!");
-return false;
-}
-if (regfirstconfirmpw != regfirstpw) {
-alert("Passwords typed do not match, please re-enter your passwords!");
-return false;
-}
+var regfirstuname = document.getElementById('txtusernameregfirst').value; var regfirstpw = document.getElementById('txtpwregfirst').value; var regfirstconfirmpw = document.getElementById('txtconfirmpwregfirst').value; var unameexp = /^[A-Za-z ']*$/; if (regfirstuname == "") { alert("Please enter the Username!"); return false } else if (!regfirstuname.match(unameexp)) { alert("Please enter valid Username!"); return false } if (regfirstpw == "") { alert("Please enter the Password!"); return false } if (regfirstpw.length < 5) { alert("Password must contain at least five characters!"); return false } if (regfirstconfirmpw == "") { alert("Please enter Confirm Password!"); return false } if (regfirstconfirmpw != regfirstpw) { alert("Passwords typed do not match, please re-enter your passwords!"); return false }
 userName = regfirstuname;
 passowrd = regfirstpw;
-prevPage = currentPage;
-document.getElementById('txtRegName').value = "";
-document.getElementById('txtRegSurName').value = "";
-document.getElementById('txtRegEmail').value = "";
+prevPage = currentPage; $('#txtRegName,#txtRegSurName,#txtRegEmail,#txtRegIDNo,#txtRegPolicyNumber').val('');
 document.getElementById('txtRegCell').value = "+27";
-document.getElementById('txtRegIDNo').value = "";
-document.getElementById('txtRegPolicyNumber').value = "";
 document.getElementById('chkAcceptTerms').src = "public/images/checkbox.png";
 $.mobile.changePage('#reg', {
 transition: "none",
@@ -1992,39 +1503,17 @@ changeHash: false
 });
 currentPage = 'reg';
 pageData.push(currentPage);
-} catch (ex) {
-alert(ex + '::ex re');
-}
-}
+} catch (ex) {}}
 /*****************************************************************************************************
 * PURPOSE :ForgotPassword
 * AUTHOR : Asha
 * CREATED DATE : 14 DEC 2013
 ******************************************************************************************************/
 function ForgotPasswordValidation() {
-var num = /^(\(?\+?[0-9]*\)?)*$/g;
-FCellNumber = document.getElementById('txtfpcellno').value;
-if (document.getElementById('txtfpcellno').value == "") {
-alert("Please enter Cell number!");
-return false;
-} else if (!FCellNumber.match(num)) {
-alert("Please enter valid Cellphone number!");
-return false;
-}
-else if (document.getElementById('txtfpcellno').value.length < '14') {
-alert("Please enter 11 digit Cell number!");
-return false;
-}
-else if (document.getElementById('txtfpcellno').value.length > '14') {
-alert("Please enter 11 digit Cell number!");
-return false;
-} else {
-FCellNumber = FCellNumber.slice(3);
-ForgotPasswordService(FCellNumber);
-}
+var num = /^(\(?\+?[0-9]*\)?)*$/g; FCellNumber = document.getElementById('txtfpcellno').value; if (FCellNumber.charAt(3) == 0) { cellRemoveFirstZero = FCellNumber.replace(FCellNumber.charAt(3), '') } else { cellRemoveFirstZero = FCellNumber } if (document.getElementById('txtfpcellno').value == "+27") { alert("Please enter Cell number!") } else if (!cellRemoveFirstZero.match(num)) { alert("Please enter a valid Cellphone number!") } else if (cellRemoveFirstZero.length < '12') { alert("Please enter a valid Cellphone number!") } else if (cellRemoveFirstZero.length > '12') { alert("Please enter a valid Cellphone number!") } else { cellRemoveFirstZero = cellRemoveFirstZero.slice(1); ForgotPasswordService(cellRemoveFirstZero) }
 }
 function ForgotPasswordService(fpcellno) {
-var forgotpwdata = ""; forgotpwdata = '<?xml version="1.0" encoding="utf-8"?>'; forgotpwdata = forgotpwdata + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; forgotpwdata = forgotpwdata + '<soap:Body>'; forgotpwdata = forgotpwdata + '<ForgotPassword xmlns="http://tempuri.org/">'; forgotpwdata = forgotpwdata + '<cellnumber>' + fpcellno + '</cellnumber>'; forgotpwdata = forgotpwdata + '</ForgotPassword>'; forgotpwdata = forgotpwdata + '</soap:Body>'; forgotpwdata = forgotpwdata + '</soap:Envelope>'; CallWebService('http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx?op=ForgotPassword', forgotpwdata, 'POST', 'text/xml', ForgotPasswordServiceCallback);
+    var forgotpwdata = ""; forgotpwdata = '<?xml version="1.0" encoding="utf-8"?>'; forgotpwdata = forgotpwdata + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; forgotpwdata = forgotpwdata + '<soap:Body>'; forgotpwdata = forgotpwdata + '<ForgotPassword xmlns="http://tempuri.org/">'; forgotpwdata = forgotpwdata + '<cellnumber>' + fpcellno + '</cellnumber>'; forgotpwdata = forgotpwdata + '</ForgotPassword>'; forgotpwdata = forgotpwdata + '</soap:Body>'; forgotpwdata = forgotpwdata + '</soap:Envelope>'; CallWebService('http://197.96.19.188/EASAwebservice/EuropeAssistStaticDataWS.asmx', forgotpwdata, 'POST', 'text/xml', ForgotPasswordServiceCallback);
 }
 function ForgotPasswordServiceCallback(responseData) {
 try {
@@ -2034,11 +1523,11 @@ var parser = new DOMParser();
 if (responseData !== "") {
 var xmlDoc = parser.parseFromString(responseData, "text/xml");
 if (xmlDoc.getElementsByTagName("ForgotPasswordResult")[0].textContent == 0) {
-alert("Please Enter Valid CellNumber.");
+alert("Please enter a valid Cellphone number!"); 
 return false;
 }
 else {
-alert("Thank you,We have sent you an Email with your password");
+alert("Thank you,We have sent your password to your registered EmailAddress");
 prevPage = currentPage;
 $.mobile.changePage('#indexPage', {
 transition: "none",
@@ -2055,8 +1544,11 @@ catch (exp) {
 }
 /*******Second time click clear all fields in page & navigate ****/
 function gotoForgotPassword() {
+$('#Fcell').val('');
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
+var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table> ';
+$(".header27").append(clonedDiv);
 prevPage = currentPage;
-//document.getElementById('txtfpcellno').value = "";
 $.mobile.changePage('#ForgotPassword', {
 transition: "none",
 reverse: true,
@@ -2068,7 +1560,7 @@ pageData.push(currentPage);
 function openpopupPayfriend() { document.getElementById("view-loading").style.display = "block"; document.getElementById("rusure").innerHTML = "You are about to pay R " + document.getElementById("txtfriendAmount").value; +" to " + document.getElementById("txtfrnd").value + " Are you sure you wish to proceed?<br>" } function yesplease() {
 document.getElementById("view-loading").style.display = "none"; $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerbckrndimg headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> <td class="headeroi"style="vertical-align:top"><div class="headerbckrndimgg" onclick="gotoService()" > <img src="public/images/EAslicing/servicesgrey.png" alt="" class="headerimgstyle" /> <div class="serfnt">Services </div> </div> <div class="profileclass" onclick="gotoWallet()" > <img src="public/images/EAslicing/walletwhite.png" alt="" class="headerimgstyle" /> <div class="walser">Wallet</div> </div> <div class="headerbckrndimgg" onclick="gotoBenifit()" > <img src="public/images/EAslicing/benifitsgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Benefits</div> </div> <div class="headerbckrndimgg" onclick="gotoProfile()"> <img src="public/images/EAslicing/profilegray.png" alt="" class="headerimgstyle" /> <div class="serfnt">Profile</div> </div> <div class="headerbckrndimgg" onclick="gotoHelp()" > <img src="public/images/EAslicing/helpgray.png" alt="" class="headerimgstyle" /> <div class="serfnt">FAQs</div> </div> </td> </tr> ';
-$(".header11").append(clonedDiv); $.mobile.changePage("#transactionsuccessful", { transition: "none", reverse: true, changeHash: false })
+$(".header11").append(clonedDiv); $.mobile.changePage("#transactionsuccessful", { transition: "none", reverse: true, changeHash: false });
 }; function nothankshide() { document.getElementById("view-loading").style.display = "none" }
 function openpopupEcity() { document.getElementById("div-viewelec").style.display = "block"; var e = document.getElementById("txtMeterNumber").value; var t = document.getElementById("txtElectricityAmt").value; document.getElementById("rusureEcity").innerHTML = "You are about to pay electricity bill. Are you sure you wish to proceed?<br>" } function yespleaseEcity() { document.getElementById("div-viewelec").style.display = "none"; $.mobile.changePage("#transactionsuccessful", { transition: "none", reverse: true, changeHash: false }) } function nothankshidepcity() { document.getElementById("div-viewelec").style.display = "none" }
 function openpopupPayStore() { document.getElementById("div-view").style.display = "block"; document.getElementById("rusurePstore").innerHTML = "You are about to pay electricity bill. Are you sure you wish to proceed?<br>" } function yespleasepaystore() { document.getElementById("div-view").style.display = "none" } function nothankpaystore() { document.getElementById("div-view").style.display = "none" }
@@ -2083,13 +1575,98 @@ buttonImageOnly: true,
 showOn: 'button'
 });
 });
-$(function () {
-$("#txtdate").datepicker();
-});
-$(function () {
-$("#Date1").datepicker();
-});
+$(function () {$("#txtdate,#Date1").datepicker();});
 window.onorientationchange = function () {
 var orientation = window.orientation;
 $('body').css('height', '100%');
+try {
+if (screen.height == 800 || screen.height == '800') {
+document.getElementById('splshimg').src = "res/screen/blackberry/225225.jpg";
+$('.footerDiv').height(480);
+setTimeout(function () {
+checkremember();
+}, 5000);
+} else {
+document.getElementById('splshimg').src = "res/screen/225225.jpg";
+$('.footerDiv').height(35);
+setTimeout(function () {
+checkremember();
+}, 5000);
+}
+} catch (ex) {
+}
+}
+function gotoFstpage(pagename) {
+Pagename = pagename; $('#txtusernameregfirst,#txtpwregfirst,#txtconfirmpwregfirst,#txtLoginUserName,#txtLoginPassword,#Fcell').val('');
+var inputData = ''; inputData = '<?xml version="1.0" encoding="utf-8"?>'; inputData = inputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; inputData = inputData + '<soap:Body>'; inputData = inputData + '<EAAppConfig  xmlns="http://tempuri.org/" />'; inputData = inputData + '</soap:Body>'; inputData = inputData + '</soap:Envelope>'; CallWebService('http://dsg.star-knowledge.com/service.asmx', inputData, 'POST', 'text/xml', checkAppLogin);
+}
+function checkAppLogin(responseData) {
+responseData = responseData.replace(/&gt;/gi, '>');
+responseData = responseData.replace(/&lt;/gi, '<');
+try {
+if (responseData != '' && responseData != null) {
+var parser = new DOMParser();
+var doc = parser.parseFromString(responseData, "text/xml");
+if (doc.getElementsByTagName('EAAppConfigResult')[0].textContent != null && doc.getElementsByTagName('EAAppConfigResult')[0].textContent != undefined) {
+if (doc.getElementsByTagName('EAAppConfigResult')[0].textContent == 1) {
+if (Pagename == 'reg') {
+prevPage = currentPage;
+$.mobile.changePage('#RegFstPage', {
+transition: "none",
+reverse: true,
+changeHash: false
+});
+currentPage = 'RegFstPage';
+pageData.push(currentPage);
+} else if (Pagename == 'login') {
+prevPage = currentPage;
+$.mobile.changePage('#log', {
+transition: "none",
+reverse: true,
+changeHash: false
+});
+currentPage = 'log';
+pageData.push(currentPage);
+} else {
+gotoService();
+}
+} else {
+if (window.localStorage.getItem("loginID") == 1) {
+prevPage = currentPage;
+$.mobile.changePage('#indexPage', {
+transition: "none",
+reverse: true,
+changeHash: false
+});
+currentPage = 'indexPage';
+pageData.push(currentPage);
+$(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26").empty();
+$("#tbldisplaycategories tr").remove();
+$("#tbldisplaycategoriesbycid tr").remove();
+$("#tbldisplaymerchantdeals tr").remove();
+$("#FAQtbl tr").remove();
+$("#tblquestionans tr").remove();
+$('#homeheader,#divhomeassist,#divmediassist,#divroadassist,#legaldiv,#traveldiv').val('');
+window.localStorage.setItem("randgosessionid", "null");
+window.localStorage.setItem("loginID", 0);
+localStorage.gettravel = 0;
+localStorage.getlegal = 0;
+localStorage.getroad = 0;
+localStorage.getmedical = 0;
+localStorage.gethome = 0;
+} else {
+alert("The System is temporarily unavailable, please try again later.");
+document.getElementById('loaddingimg').style.display = "none";
+}
+}
+} else {
+alert("The System is temporarily unavailable, please try again later.");
+document.getElementById('loaddingimg').style.display = "none";
+}
+} else {
+alert("The System is temporarily unavailable, please try again later.");
+document.getElementById('loaddingimg').style.display = "none";
+}
+} catch (ex) {
+}
 }
