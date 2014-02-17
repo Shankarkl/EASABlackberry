@@ -1,7 +1,7 @@
- // JScript source code
+// JScript source code
 var pageData = ["splscreen"];
 var currentPage, prevPage, userName, passowrd, HomeID, RoadID, MedicalID, legalID, TravelID = '';
-var Pagename = ''; localStorage.count = 0; 
+var Pagename = ''; localStorage.count = 0;
 /*******************************************************************************
 * FUNCTION TO CALL ANY WEB SERVICE //live link http://118.139.160.226/Europewebservice/EuropeAssistStaticDataWS.asmx
 ******************************************************************************/
@@ -14,7 +14,7 @@ if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 xhr = new XMLHttpRequest();
 } else {// code for IE6, IE5bacl
 xhr = new ActiveXObject("Microsoft.XMLHTTP");
-}  
+}
 xhr.onreadystatechange = function () {
 if (xhr.readyState == 4 && xhr.status == 200) {
 document.getElementById('loaddingimg').style.display = "none";
@@ -63,12 +63,12 @@ $("#hmimg,#mdimg,#rdimg,#lgimg,#tlimg").hide();
 try {
 if (window.localStorage.getItem("loginID") == 'null' || window.localStorage.getItem("loginID") == null || window.localStorage.getItem("loginID") == undefined || window.localStorage.getItem("loginID") == 0) {
 prevPage = currentPage;
-$.mobile.changePage('#indexPage', {
+$.mobile.changePage('#log', {
 transition: "none",
 reverse: true,
 changeHash: false
 });
-currentPage = 'indexPage';
+currentPage = 'log';
 pageData.push(currentPage);
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
 $("#tbldisplaycategories tr,#tbldisplaycategoriesbycid tr,#tbldisplaymerchantdeals tr,#FAQtbl tr,#tblquestionans tr").remove();
@@ -1544,7 +1544,7 @@ catch (exp) {
 }
 /*******Second time click clear all fields in page & navigate ****/
 function gotoForgotPassword() {
-$('#Fcell').val('');
+$('#txtfpcellno').val('+27');
 $(".header2,.header3,.header4,.header5,.header6,.header7,.header8,.header9,.header10,.header11,.header12,.header13,.header14,.header15,.header16,.header17,.header18,.header19,.header20,.header21,.header22,.header23,.header24,.header25,.header26,.header27,.header28").empty();
 var clonedDiv = '<table style="width:102%;height:100%;" cellspacing="0" cellpadding="0"> <tr> <td class="headerwt"> <div style="width:100%"><img src="public/images/EAslicing/innerlogo.png" class="europimght" /></div> </td> </tr> </table> ';
 $(".header27").append(clonedDiv);
@@ -1597,7 +1597,7 @@ checkremember();
 }
 }
 function gotoFstpage(pagename) {
-Pagename = pagename; $('#txtusernameregfirst,#txtpwregfirst,#txtconfirmpwregfirst,#txtLoginUserName,#txtLoginPassword,#Fcell').val('');
+Pagename = pagename; $('#txtusernameregfirst,#txtpwregfirst,#txtconfirmpwregfirst,#txtLoginUserName,#txtLoginPassword,#txtfpcellno').val('');
 var inputData = ''; inputData = '<?xml version="1.0" encoding="utf-8"?>'; inputData = inputData + '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'; inputData = inputData + '<soap:Body>'; inputData = inputData + '<EAAppConfig  xmlns="http://tempuri.org/" />'; inputData = inputData + '</soap:Body>'; inputData = inputData + '</soap:Envelope>'; CallWebService('http://dsg.star-knowledge.com/service.asmx', inputData, 'POST', 'text/xml', checkAppLogin);
 }
 function checkAppLogin(responseData) {
